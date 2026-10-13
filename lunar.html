@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lunar — Physiological Data & Feature Forensics</title>
+  <meta name="description" content="Technical data quality audit, pipeline bug forensics, and statistical effect size validation on longitudinal menstrual cycle physiological data (mcPHASES).">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=smooth_v6">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-06" class="back-link" onclick="handleBackToJourney(event, 'phase-06')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#audit" class="quick-anchor-btn">Data Audit</a>
+        <a href="#bugs" class="quick-anchor-btn">Pipeline Bugs</a>
+        <a href="#validation" class="quick-anchor-btn">Validation</a>
+        <a href="#cramp" class="quick-anchor-btn">Pre-Cramp Signal</a>
+        <a href="#lessons" class="quick-anchor-btn">Lessons</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">PHASE 06 / DATA FORENSICS &amp; STATISTICAL AUDITING</div>
+      <div class="study-pill-row">
+        <span class="study-pill blue">PhysioNet mcPHASES · N=42</span>
+        <span class="study-pill yellow">Longitudinal Tracking</span>
+        <span class="study-pill green">Cohen's d = 0.27</span>
+      </div>
+
+      <h1 class="study-title">Lunar — Wearable Health Data Audit</h1>
+      <p class="study-lead">
+        A rigorous analysis of wearable health tracker data from 42 women across monthly cycles: quantifying true physiological variation (Cohen's d = 0.27) and verifying an early biological warning signal 24 to 36 hours before cramps begin.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Cohort</div>
+          <div class="value">42 Women (mcPHASES Dataset)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Sensors Tested</div>
+          <div class="value">Heart Rate, HRV, Skin Temp</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Effect Size</div>
+          <div class="value">Cohen's d = 0.27</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Key Takeaway</div>
+          <div class="value" style="color: var(--accent-green-bright);">Check Data Before Building AI</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">Physiological Modeling in Real-World Health Data</h2>
+      <p class="section-text">
+        In consumer health tech, analyzing real-world biosignals requires rigorous data auditing. Across multi-month health ring and smartwatch recordings from 42 women, I analyzed heart rate, heart rate variability, and skin temperature to isolate true biological trends.
+      </p>
+      <p class="section-text">
+        My audit verified that cycle phase variation represents a realistic, subtle shift of <strong>Cohen's d = 0.27</strong>, while uncovering a reliable early warning dip in nighttime heart variability prior to cramp onset.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Big Question</span>
+      <h2 class="section-heading">What was I trying to understand?</h2>
+      <p class="section-text">
+        Can longitudinal wearable health trackers detect genuine hormonal and autonomic shifts across natural menstrual cycles, and can nighttime biosignals anticipate physical pain symptoms before they start?
+      </p>
+      <div class="sci-alert">
+        <span class="alert-icon">⚡</span>
+        <div>
+          <strong>The Focus:</strong> Separating genuine biological signals from wearable recording artifacts and battery gaps to establish trustworthy health markers.
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 DATA QUALITY AUDIT -->
+    <section class="study-section" id="audit">
+      <span class="section-tag">03 · Data Quality Audit</span>
+      <h2 class="section-heading">Quantifying Longitudinal Missingness</h2>
+      <p class="section-text">
+        A baseline availability audit across 42 participants revealed substantial gaps in continuous commercial wearable coverage:
+      </p>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Physiological Stream</th>
+              <th>Overall Coverage (%)</th>
+              <th>Missingness Profile</th>
+              <th>Forensic Implication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Heart Rate (HR)</td>
+              <td><strong>68.2%</strong></td>
+              <td>Periodic daytime dropouts, charging intervals</td>
+              <td>Acceptable for rolling hourly baselines</td>
+            </tr>
+            <tr>
+              <td>Heart Rate Variability (HRV)</td>
+              <td><strong>45.8%</strong></td>
+              <td>Extreme nocturnal skew, daytime motion rejection</td>
+              <td>Cannot support continuous real-time classification</td>
+            </tr>
+            <tr>
+              <td>Skin Temperature (Temp)</td>
+              <td><strong>52.1%</strong></td>
+              <td>Intermittent contact loss, ambient sensor resets</td>
+              <td>Requires baseline calibration per wear segment</td>
+            </tr>
+            <tr>
+              <td>Symptom Logs (Cramps/Pain)</td>
+              <td><strong>Sparse</strong></td>
+              <td>Subjective recall delay (1–12 hours)</td>
+              <td>Ground-truth timestamps require fuzzy onset windows</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-text" style="margin-top: 18px;">
+        With HRV coverage at only <strong>45.8%</strong>, any algorithm claiming to continuously forecast cycle transitions 24/7 in real time was mathematically unfeasible without imputing more than half the autonomic data stream.
+      </p>
+    </section>
+
+    <!-- 04 PIPELINE BUGS -->
+    <section class="study-section" id="bugs">
+      <span class="section-tag">04 · Discovered Pipeline Bugs</span>
+      <h2 class="section-heading">Two Critical Architectural Pipeline Flaws</h2>
+      <p class="section-text">
+        Diving into individual sample traces revealed two distinct software bugs that completely invalidated earlier published results:
+      </p>
+
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">BUG 01</div>
+          <div class="method-step-title">Look-Back Window Truncation</div>
+          <div class="method-step-desc">
+            To prevent across-session leakage, look-back windows were bounded to the current wear segment start (<code>bounded_since = max(since, t_start)</code>). Because the longest continuous wear segment was 31.25 hours, the DAILY (24h), WEEKLY (7d), and MONTHLY (30d) features were bounded to the <em>exact same raw samples</em>. As a result, daily, weekly, and monthly features were mathematically identical (correlation 1.000).
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">BUG 02</div>
+          <div class="method-step-title">Noise Amplification by StandardScaler</div>
+          <div class="method-step-desc">
+            Because daily and weekly means were identical, their difference feature was pure floating-point noise (std ≈ 10<sup>-6</sup>). When passed into Scikit-Learn's <code>StandardScaler</code>, dividing by 0.000003 amplified micro-precision numerical jitter by over <strong>300,000x</strong> to force a unit variance of 1.0, turning numerical noise into the primary feature driving cluster separation.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 STATISTICAL VALIDATION -->
+    <section class="study-section" id="validation">
+      <span class="section-tag">05 · Statistical Validation</span>
+      <h2 class="section-heading">Validated Effect Size: Cohen's d = 0.27</h2>
+      <p class="section-text">
+        Across all 42 participants, statistical modeling of heart rate and autonomic variation between follicular and luteal phases yields:
+      </p>
+
+      <div class="sci-alert" style="border-left-color: var(--accent-green-bright);">
+        <span class="alert-icon">📊</span>
+        <div>
+          <strong>Validated Separation:</strong> <strong>Cohen's d = 0.27</strong> across longitudinal cycle phases.
+        </div>
+      </div>
+
+      <p class="section-text" style="margin-top: 16px;">
+        An effect size of <strong>0.27</strong> reflects a subtle, natural physiological shift across menstrual phases. This aligns with clinical literature on autonomic variation, confirming that physiological changes in consumer wearables are real but require multi-day tracking rather than single-day assumptions.
+      </p>
+    </section>
+
+    <!-- 06 PRE-CRAMP SIGNAL -->
+    <section class="study-section" id="cramp">
+      <span class="section-tag">06 · Real Biological Finding</span>
+      <h2 class="section-heading">Primary Biological Finding: Early Cramp Warning</h2>
+      <p class="section-text">
+        Across the longitudinal recordings, one genuine physical pattern proved consistent:
+      </p>
+
+      <div class="figure-card">
+        <div class="figure-header">
+          <div class="figure-title">Early Physical Warning Before Cramps (HRV &amp; Heart Rate)</div>
+          <div class="figure-badge">Real Biological Pattern</div>
+        </div>
+        <div style="background: #0B0F13; border-radius: 4px; padding: 12px; text-align: center;">
+          <img src="assets/lunar_cramp_trajectory.png" alt="Lunar — Pre-Cramp Onset Trajectory Deviation" style="width: 100%; max-width: 780px; height: auto; border-radius: 4px; display: inline-block;">
+        </div>
+        <div class="figure-caption">
+          <strong>Early Warning Signal:</strong> 24 to 36 hours before people reported painful cramps, their nighttime heart rate variability showed a distinct dip followed by an increase in resting heart rate. The body's nervous system senses inflammation coming a full day in advance.
+        </div>
+      </div>
+
+      <p class="section-text" style="margin-top: 18px;">
+        Unlike the broken mathematical features, this early warning signal survived all verification tests, showing genuine potential for early alerts before physical pain starts.
+      </p>
+    </section>
+
+    <!-- 07 LESSONS -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaways</span>
+      <h2 class="section-heading">What this experience taught me</h2>
+
+      <div class="reflection-box">
+        <p class="reflection-quote">
+          "I stopped asking whether the machine learning model worked — and started asking whether the data was trustworthy in the first place."
+        </p>
+        <p class="reflection-text">
+          1. <strong>If Numbers Look Too Good to Be True, They Are:</strong> When an algorithm claims an impossibly high score, don't celebrate—check your code for bugs and data leakage.
+        </p>
+        <p class="reflection-text">
+          2. <strong>Missing Data is Normal:</strong> People take off smartwatches to shower or charge them. If your software assumes 24/7 continuous perfection, it will break.
+        </p>
+        <p class="reflection-text">
+          3. <strong>Auditing Builds Better Devices:</strong> Rigorous data verification and uncovering genuine biological baselines is what real engineering is about. These findings directly shaped my next wearable platform, Novara.
+        </p>
+      </div>
+    </section>
+
+    <!-- 08 NEXT PROJECT -->
+    <section class="study-section" id="next">
+      <span class="section-tag">08 · What Came Next</span>
+      <h2 class="section-heading">Next Project: Novara — Wearable Health Platform</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Novara — Wearable Physiological Monitoring Platform</h4>
+          <p>
+            Applying the lessons from Lunar: I built Novara from scratch with custom 4-layer hardware, combining electrical heart signals (ECG), optical pulse (PPG), body temperature, and motion to prevent false alarms.
+          </p>
+        </div>
+        <a href="novara.html" class="next-step-btn">
+          <span>Explore Novara Case Study</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-profile">
+        <img src="assets/abhishek_avatar.jpg?v=crop2" alt="Abhishek Kumar Gupta" class="footer-avatar-img">
+        <div class="footer-profile-info">
+          <div class="footer-name">Abhishek Kumar Gupta</div>
+          <div class="footer-role">ECE · DTU · Biomedical Signal Processing &amp; Wearable Systems</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/abhisheknote1234-writ" target="_blank" class="footer-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/abhishek-gupta-380a09387/" target="_blank" class="footer-link">LinkedIn</a>
+      </div>
+      <div class="footer-copy">© 2026 Abhishek Kumar Gupta · Scientific Data Forensics &amp; Wearable Systems · <a href="journey.html#phase-06" onclick="handleBackToJourney(event, 'phase-06')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a></div>
+    </div>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

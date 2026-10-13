@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question-Level Cardiac Dynamics During Working Memory — Research Case Study</title>
+  <meta name="description" content="Forensically audited research case study on beat-by-beat cardiac dynamics and short-window HRV across 5,959 Sternberg working-memory trials with continuous 1000 Hz ECG.">
+
+  <!-- Google Fonts: Unified Typography System (DM Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫀</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=cohesive_palette_v1">
+
+  <style>
+    /* Dedicated Case Study Styles */
+    .study-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .study-nav-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(13, 17, 20, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 24px;
+    }
+
+    .study-nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color var(--transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--accent-green-bright);
+    }
+
+    .quick-anchors {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .quick-anchor-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.76rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 4px;
+      transition: all var(--transition-fast);
+    }
+
+    .quick-anchor-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-card-hover);
+    }
+
+    /* Hero Case Study Block */
+    .study-hero {
+      padding: 30px 0 50px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 50px;
+    }
+
+    .study-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .study-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .study-pill.green {
+      background: var(--accent-green-dim);
+      color: var(--accent-green-bright);
+      border: 1px solid rgba(53, 211, 154, 0.25);
+    }
+
+    .study-pill.yellow {
+      background: var(--accent-yellow-dim);
+      color: var(--accent-yellow-bright);
+      border: 1px solid rgba(240, 199, 94, 0.25);
+    }
+
+    .study-pill.brown {
+      background: var(--accent-terracotta-dim);
+      color: var(--accent-terracotta);
+      border: 1px solid rgba(201, 120, 99, 0.25);
+    }
+
+    .study-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .study-lead {
+      font-size: 1.12rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 950px;
+    }
+
+    .study-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      background: rgba(18, 24, 34, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-bottom: 30px;
+    }
+
+    .study-meta-item .label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .study-meta-item .value {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Section Styling */
+    .study-section {
+      margin-bottom: 60px;
+      scroll-margin-top: 90px;
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-green-bright);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .section-heading {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-text {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .section-text strong {
+      color: #f1f5f9;
+    }
+
+    /* Scientific Alert Box */
+    .sci-alert {
+      background: rgba(13, 20, 29, 0.85);
+      border-left: 4px solid var(--accent-green);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.65;
+    }
+
+    .sci-alert.warning {
+      border-left-color: var(--accent-yellow);
+      background: rgba(30, 24, 13, 0.65);
+    }
+
+    .sci-alert.audit {
+      border-left-color: var(--accent-brown);
+      background: rgba(26, 20, 16, 0.75);
+    }
+
+    .sci-alert strong {
+      color: #ffffff;
+    }
+
+    /* Figures / SVG Plots */
+    .figure-card {
+      background: rgba(15, 20, 28, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin: 28px 0;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .figure-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .figure-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .figure-badge {
+      font-size: 0.72rem;
+      font-family: var(--font-sans);
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-green-bright);
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .figure-caption {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: #8392a5;
+      line-height: 1.6;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+    }
+
+    /* Data Table Styling */
+    .data-table-wrapper {
+      overflow-x: auto;
+      margin: 22px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(20, 27, 38, 0.95);
+      color: #cbd5e1;
+      padding: 12px 16px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: #ffffff;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table .highlight-row td {
+      background: rgba(16, 185, 129, 0.08);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .badge-status {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-status.valid {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green-bright);
+    }
+
+    .badge-status.retracted {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+    }
+
+    .badge-status.fragile {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-yellow-bright);
+    }
+
+    .code-tree {
+      background: #0d121a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .code-tree .comment {
+      color: #55667d;
+    }
+
+    .code-tree .highlight {
+      color: var(--accent-green-bright);
+      font-weight: 600;
+    }
+
+    /* Forensic Audit Cards */
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .audit-card {
+      background: rgba(16, 22, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform var(--transition-fast);
+    }
+
+    .audit-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200, 150, 102, 0.4);
+    }
+
+    .audit-card-num {
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      color: var(--accent-brown-light);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .audit-card h4 {
+      font-size: 0.95rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .audit-comparison {
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .audit-orig {
+      color: #ef4444;
+      margin-bottom: 6px;
+    }
+
+    .audit-fixed {
+      color: var(--accent-green-bright);
+    }
+
+    @media (max-width: 900px) {
+      .study-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .study-title {
+        font-size: 2rem;
+      }
+      .quick-anchors {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .study-meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .study-title {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow top-right"></div>
+  <div class="ambient-glow bottom-left"></div>
+  <div class="ambient-glow center-warm"></div>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+      <a href="journey.html#phase-04" class="back-link" onclick="handleBackToJourney(event, 'phase-04')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#summary" class="quick-anchor-btn">Summary</a>
+        <a href="#pipeline" class="quick-anchor-btn">Pipeline</a>
+        <a href="#trajectory" class="quick-anchor-btn">Trajectory</a>
+        <a href="#phenotypes" class="quick-anchor-btn">Phenotypes</a>
+        <a href="#speed-pressure" class="quick-anchor-btn">Speed Pressure</a>
+        <a href="#hrv" class="quick-anchor-btn">HRV</a>
+        <a href="#audit" class="quick-anchor-btn">Self-Audit</a>
+        <a href="#limitations" class="quick-anchor-btn">Limitations</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="summary">
+      <div class="study-phase-label">PHASE 04 · COGNITIVE &amp; CARDIAC DYNAMICS</div>
+      <div class="study-pill-row">
+        <span class="study-pill green">In-Depth Research Case Study</span>
+        <span class="study-pill yellow">OpenNeuro ds006848 · N=30 · 5,959 Trials</span>
+        <span class="study-pill brown">1000 Hz Continuous ECG</span>
+      </div>
+
+      <h1 class="study-title">Question-Level Cardiac Dynamics During Working Memory</h1>
+      <p class="study-lead">
+        How your heart slows down when you focus, why people whose hearts fail to slow down make 8% more mistakes under time pressure, and a transparent audit of 5,959 memory tests across 30 people.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Testing Volume</div>
+          <div class="value">30 People / 5,959 Questions</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Signal Quality</div>
+          <div class="value">1000 Hz Hospital-Grade ECG</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Mental Task</div>
+          <div class="value">Short-Term Memory (Sternberg)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Integrity Audit</div>
+          <div class="value" style="color: var(--accent-green-bright);">Verified / 6 Self-Corrections</div>
+        </div>
+      </div>
+
+      <!-- Core Metrics Strip -->
+      <div class="flagship-metrics-grid">
+        <div class="flagship-metric-card">
+          <div class="flagship-metric-val">&minus;1.93 <span style="font-size:0.95rem;">bpm</span></div>
+          <div class="flagship-metric-label">Heart Slows During Focus</div>
+          <div class="flagship-metric-sub">Average heart rate slows from 80.8 to 78.8 bpm while holding items in mind</div>
+        </div>
+        <div class="flagship-metric-card">
+          <div class="flagship-metric-val yellow">+0.782 <span style="font-size:0.95rem;">bpm</span></div>
+          <div class="flagship-metric-label">Rebound Under Rush</div>
+          <div class="flagship-metric-sub">When rushed to answer quickly, the heart immediately speeds back up</div>
+        </div>
+        <div class="flagship-metric-card">
+          <div class="flagship-metric-val brown">&minus;8.32%</div>
+          <div class="flagship-metric-label">Mistake Surge Under Rush</div>
+          <div class="flagship-metric-sub">People whose hearts didn't slow down suffered an 8.3% drop in accuracy when rushed</div>
+        </div>
+        <div class="flagship-metric-card">
+          <div class="flagship-metric-val cyan">+16.17 <span style="font-size:0.95rem;">ms</span></div>
+          <div class="flagship-metric-label">Heart Jitter on Mistakes</div>
+          <div class="flagship-metric-sub">Beat-to-beat variability became noticeably unsteady on incorrect answers</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 1. Research Question & Importance -->
+    <section class="study-section">
+      <span class="section-tag">01 · Why This Matters</span>
+      <h2 class="section-heading">Why Question-by-Question Heart Tracking Matters</h2>
+      <p class="section-text">
+        Most health studies average your heart rate over 5 or 10-minute blocks. But a 5-minute average completely wipes out what happens during a single thought: what happens in the 2 seconds when you look at a question, the 5 seconds when you hold it in your mind, and the exact moment you answer.
+      </p>
+      <p class="section-text">
+        Using high-speed heart recordings across 30 people answering nearly 6,000 memory questions, this investigation answered two simple questions:
+      </p>
+      <div class="sci-alert">
+        <strong>The Two Core Questions:</strong> 1. Does your heart automatically slow down when you concentrate on holding a thought? And 2. If your body fails to make this adjustment, do you make more mistakes when rushed for time?
+      </div>
+    </section>
+
+    <!-- 2. Signal Processing Pipeline -->
+    <section class="study-section" id="pipeline">
+      <span class="section-tag">02 · Signal Processing Architecture</span>
+      <h2 class="section-heading">Continuous Preprocessing &amp; Event Alignment Pipeline</h2>
+      <p class="section-text">
+        To eliminate filter edge-transients that inevitably distort short epochs, all signal conditioning was executed on the <strong>continuous, unsegmented session-level recording</strong> prior to trial extraction:
+      </p>
+
+      <div class="figure-card">
+        <div class="figure-header">
+          <span class="figure-title">Figure 6: Validated End-to-End Processing &amp; Verification Chain</span>
+          <span class="figure-badge">Python · MNE · NeuroKit2</span>
+        </div>
+        
+        <!-- SVG Pipeline Diagram -->
+        <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="pipeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#10b981" />
+              <stop offset="50%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#dfb288" />
+            </linearGradient>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+            </marker>
+          </defs>
+
+          <!-- Boxes -->
+          <g transform="translate(10, 20)">
+            <rect width="180" height="70" rx="8" fill="#131a24" stroke="#10b981" stroke-width="1.5" />
+            <text x="90" y="32" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Raw Continuous ECG</text>
+            <text x="90" y="52" fill="#94a3b8" font-size="9.5" text-anchor="middle">1000 Hz Lead I/II Recording</text>
+          </g>
+
+          <line x1="190" y1="55" x2="225" y2="55" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)" />
+
+          <g transform="translate(230, 20)">
+            <rect width="185" height="70" rx="8" fill="#131a24" stroke="#34d399" stroke-width="1.5" />
+            <text x="92" y="32" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Noise Cleaning Filter</text>
+            <text x="92" y="52" fill="#94a3b8" font-size="9.5" text-anchor="middle">0.5–40 Hz Session-Wide Filter</text>
+          </g>
+
+          <line x1="415" y1="55" x2="450" y2="55" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)" />
+
+          <g transform="translate(455, 20)">
+            <rect width="195" height="70" rx="8" fill="#131a24" stroke="#fbbf24" stroke-width="1.5" />
+            <text x="97" y="32" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Heartbeat Peak Detection</text>
+            <text x="97" y="52" fill="#94a3b8" font-size="9.5" text-anchor="middle">Finds True Beats &amp; Removes Noise</text>
+          </g>
+
+          <line x1="650" y1="55" x2="685" y2="55" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)" />
+
+          <g transform="translate(690, 20)">
+            <rect width="195" height="70" rx="8" fill="#131a24" stroke="#dfb288" stroke-width="1.5" />
+            <text x="97" y="32" fill="#dfb288" font-size="11" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Clean Beat-to-Beat Data</text>
+            <text x="97" y="52" fill="#94a3b8" font-size="9.5" text-anchor="middle">Saved Clean RR Intervals (.npz)</text>
+          </g>
+
+          <!-- Second Row: Event Slicing -->
+          <line x1="787" y1="90" x2="787" y2="135" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)" />
+
+          <g transform="translate(470, 140)">
+            <rect width="415" height="80" rx="8" fill="#111722" stroke="#dfb288" stroke-width="1.5" stroke-dasharray="4" />
+            <text x="207" y="26" fill="#ffffff" font-size="11.5" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Align Heartbeats to Memory Questions</text>
+            <text x="207" y="46" fill="#94a3b8" font-size="9.5" text-anchor="middle">Rest [-5..0s] · Reading [0..5s] · Remembering [5..15s] · Answering [15..20s]</text>
+            <text x="207" y="65" fill="#34d399" font-size="9.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Compute Heart Rate (BPM) &amp; Compare to Resting Baseline</text>
+          </g>
+
+          <line x1="470" y1="180" x2="435" y2="180" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)" />
+
+          <g transform="translate(10, 140)">
+            <rect width="420" height="80" rx="8" fill="#0b1712" stroke="#10b981" stroke-width="1.5" />
+            <text x="210" y="26" fill="#34d399" font-size="11.5" font-weight="700" text-anchor="middle" font-family="'DM Sans', sans-serif">Statistical Testing &amp; Verification Checks</text>
+            <text x="210" y="46" fill="#94a3b8" font-size="9.5" text-anchor="middle">Linear Mixed Models (LMM) · Group Splits · Beat Variability (HRV)</text>
+            <text x="210" y="65" fill="#fbbf24" font-size="9.5" text-anchor="middle">Audited Short Windows to Guarantee Findings Are Real</text>
+          </g>
+        </svg>
+
+        <div class="figure-caption">
+          <strong>Signal Processing Integrity:</strong> ECG is filtered and heartbeats are detected across the entire continuous session first. Only after heart rate is cleanly computed are the signals sliced into question phases, strictly preventing edge errors and math distortions.
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Question-Level Trajectory -->
+    <section class="study-section" id="trajectory">
+      <span class="section-tag">03 · Verified Grand-Mean Findings</span>
+      <h2 class="section-heading">Question-Level Cardiac Trajectory (5,959 Trials)</h2>
+      <p class="section-text">
+        Across all 30 participants and 5,959 trials, working-memory processing was accompanied by a reproducible phase-dependent change in heart rate, with the greatest average slowing during maintenance and subsequent recovery during recall:
+      </p>
+
+      <div class="figure-card">
+        <div class="figure-header">
+          <span class="figure-title">Figure 1: Evoked Cardiac Trajectory Across Working-Memory Phases</span>
+          <span class="figure-badge">N=30 · 5,959 Attempts · Grand Mean</span>
+        </div>
+
+        <!-- SVG Trajectory Plot -->
+        <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <!-- Grid & Axes -->
+          <rect width="900" height="320" fill="#0f141d" rx="6" />
+          
+          <!-- Phase shaded zones -->
+          <rect x="80" y="30" width="160" height="230" fill="rgba(255,255,255,0.015)" />
+          <text x="160" y="50" fill="#64748b" font-size="10" text-anchor="middle" font-weight="600">BASELINE (-5 to 0s)</text>
+
+          <rect x="240" y="30" width="160" height="230" fill="rgba(16,185,129,0.03)" />
+          <text x="320" y="50" fill="#10b981" font-size="10" text-anchor="middle" font-weight="600">ENCODING (0 to 5s)</text>
+
+          <rect x="400" y="30" width="280" height="230" fill="rgba(16,185,129,0.07)" />
+          <text x="540" y="50" fill="#34d399" font-size="10" text-anchor="middle" font-weight="700">MAINTENANCE (5 to 15s)</text>
+
+          <rect x="680" y="30" width="160" height="230" fill="rgba(251,191,36,0.03)" />
+          <text x="760" y="50" fill="#fbbf24" font-size="10" text-anchor="middle" font-weight="600">RECALL (15 to 20s)</text>
+
+          <!-- Y Grid Lines -->
+          <line x1="80" y1="80" x2="840" y2="80" stroke="rgba(255,255,255,0.07)" stroke-dasharray="3" />
+          <text x="70" y="84" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">81.0 bpm</text>
+
+          <line x1="80" y1="130" x2="840" y2="130" stroke="rgba(255,255,255,0.07)" stroke-dasharray="3" />
+          <text x="70" y="134" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">80.0 bpm</text>
+
+          <line x1="80" y1="180" x2="840" y2="180" stroke="rgba(255,255,255,0.07)" stroke-dasharray="3" />
+          <text x="70" y="184" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">79.0 bpm</text>
+
+          <line x1="80" y1="230" x2="840" y2="230" stroke="rgba(255,255,255,0.07)" stroke-dasharray="3" />
+          <text x="70" y="234" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">78.0 bpm</text>
+
+          <!-- Baseline reference line -->
+          <line x1="80" y1="88" x2="840" y2="88" stroke="#dfb288" stroke-width="1.2" stroke-dasharray="4" opacity="0.6" />
+          <text x="830" y="82" fill="#dfb288" font-size="9" text-anchor="end">Baseline Ref (80.84 bpm)</text>
+
+          <!-- Trajectory Curve -->
+          <!-- P1: Baseline (-2.5s) x=160, y=88 (80.84 bpm) -->
+          <!-- P2: Encoding (2.5s) x=320, y=152 (79.56 bpm) -->
+          <!-- P3: Maintenance (10s) x=540, y=192 (78.75 bpm) -->
+          <!-- P4: Recall (17.5s) x=760, y=170 (79.19 bpm) -->
+          <path d="M 160 88 C 240 88, 250 152, 320 152 C 400 152, 440 192, 540 192 C 640 192, 680 170, 760 170" 
+                fill="none" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" />
+
+          <!-- Shaded Area Below Curve -->
+          <path d="M 160 88 C 240 88, 250 152, 320 152 C 400 152, 440 192, 540 192 C 640 192, 680 170, 760 170 L 760 260 L 160 260 Z"
+                fill="url(#curveAreaGrad)" opacity="0.12" />
+
+          <defs>
+            <linearGradient id="curveAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#10b981" />
+              <stop offset="100%" stop-color="transparent" />
+            </linearGradient>
+          </defs>
+
+          <!-- Data Points -->
+          <circle cx="160" cy="88" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+          <text x="160" y="74" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">80.84 bpm</text>
+
+          <circle cx="320" cy="152" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+          <text x="320" y="140" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">79.56 bpm (-1.16)</text>
+
+          <circle cx="540" cy="192" r="7" fill="#fbbf24" stroke="#ffffff" stroke-width="2.5" />
+          <text x="540" y="222" fill="#fbbf24" font-size="12" font-weight="800" text-anchor="middle" font-family="'JetBrains Mono', monospace">78.75 bpm (-1.93 max dip)</text>
+
+          <circle cx="760" cy="170" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+          <text x="760" y="156" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">79.19 bpm (-1.62)</text>
+
+          <!-- X axis line -->
+          <line x1="80" y1="260" x2="840" y2="260" stroke="#334155" stroke-width="1.5" />
+          <text x="80" y="280" fill="#64748b" font-size="10">-5.0 s</text>
+          <text x="240" y="280" fill="#64748b" font-size="10">0.0 s</text>
+          <text x="400" y="280" fill="#64748b" font-size="10">5.0 s</text>
+          <text x="680" y="280" fill="#64748b" font-size="10">15.0 s</text>
+          <text x="840" y="280" fill="#64748b" font-size="10">20.0 s</text>
+        </svg>
+
+        <div class="figure-caption">
+          <strong>Average Heart Pattern Across All Trials:</strong> Instantaneous heart rate drops progressively from 80.84 bpm down to 78.75 bpm while holding items in memory (a drop of &minus;1.93 bpm), and then speeds back up toward baseline when answering (79.19 bpm).
+        </div>
+      </div>
+
+      <div class="sci-alert warning">
+        <strong>Careful Scientific Note:</strong> This reveals a clear, repeatable bodily response: your heart naturally slows down while holding information in mind, and speeds back up when you answer.
+      </div>
+    </section>
+
+    <!-- 4. Condition Rebound -->
+    <section class="study-section">
+      <span class="section-tag">04 · Speed Pressure</span>
+      <h2 class="section-heading">When Does the Heart Speed Up? Paced vs Rushed Tasks</h2>
+      <p class="section-text">
+        When items were presented slowly (1 second per item), people stayed relaxed and their heart rate stayed calm. But when items were flashed rapidly (0.2 seconds per item), the heart surged back up (+0.78 bpm) to mobilize mental energy under speed pressure:
+      </p>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Task Speed</th>
+              <th>How Items Were Shown</th>
+              <th>Heart Speed-Up at Recall</th>
+              <th>Statistical Difference</th>
+              <th>P-Value</th>
+              <th>What It Means</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Slow (Paced)</strong></td>
+              <td>1.0 s per item</td>
+              <td><strong>&minus;0.009 bpm</strong></td>
+              <td>Baseline reference</td>
+              <td>&mdash;</td>
+              <td>Calm pacing; no surge needed</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>Fast (Rapid Rush)</strong></td>
+              <td>0.2 s per item</td>
+              <td><strong>+0.782 bpm</strong></td>
+              <td><strong>t = 3.171</strong></td>
+              <td><strong>p = 0.00358</strong></td>
+              <td><span class="badge-status valid">Significant Surge</span></td>
+            </tr>
+            <tr>
+              <td><strong>Simultaneous</strong></td>
+              <td>All items at once</td>
+              <td><strong>+1.101 bpm</strong></td>
+              <td>t = 4.289</td>
+              <td>p = 0.00017</td>
+              <td><span class="badge-status valid">Strongest Surge</span></td>
+            </tr>
+            <tr>
+              <td><strong>Fast + delay</strong></td>
+              <td>Rapid + extra breathing room</td>
+              <td><strong>&minus;0.127 bpm</strong></td>
+              <td>t = &minus;0.482</td>
+              <td>p = 0.6335</td>
+              <td>Surge gone; extra time helped them relax</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sci-alert audit">
+        <strong>Statistical Check:</strong> I audited the statistical model to make sure we compared recall directly against the holding phase, proving this surge was a genuine physical reaction to speed pressure.
+      </div>
+    </section>
+
+    <!-- 5. Individual Phenotypes -->
+    <section class="study-section" id="phenotypes">
+      <span class="section-tag">05 · Individual Differences</span>
+      <h2 class="section-heading">Two Types of People: Decelerators vs Accelerators</h2>
+      <p class="section-text">
+        To see if this heart dip actually matters for test scores, I split the 30 participants into two groups: 22 people whose hearts slowed down normally, and 8 people whose hearts barely dipped or even sped up:
+      </p>
+      
+      <div class="figure-card">
+        <div class="figure-header">
+          <span class="figure-title">Figure 2: Distribution of Maintenance ΔHR Across All 30 Participants</span>
+          <span class="figure-badge">Operational Cutoff: &tau; = &minus;1.30 bpm</span>
+        </div>
+
+        <!-- SVG Waterfall / Bar Distribution -->
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <rect width="900" height="260" fill="#0f141d" rx="6" />
+          
+          <!-- Zero line -->
+          <line x1="60" y1="120" x2="860" y2="120" stroke="#475569" stroke-width="1.5" />
+          <text x="50" y="124" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">0.0 bpm</text>
+
+          <!-- Cutoff line at -1.30 bpm -> y = 120 + 1.30*25 = 152.5 -->
+          <line x1="60" y1="153" x2="860" y2="153" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="5" />
+          <text x="860" y="146" fill="#fbbf24" font-size="10" text-anchor="end" font-weight="700">Operational Cutoff: &minus;1.30 bpm</text>
+
+          <!-- Bars for 30 participants -->
+          <!-- 22 Decelerators (y > 153, values from -5.4 to -1.31) -->
+          <!-- P1 to P22 -->
+          <g fill="#10b981">
+            <rect x="70" y="120" width="18" height="110" rx="2" opacity="0.85" /><!-- -4.4 -->
+            <rect x="94" y="120" width="18" height="98" rx="2" opacity="0.85" />
+            <rect x="118" y="120" width="18" height="92" rx="2" opacity="0.85" />
+            <rect x="142" y="120" width="18" height="85" rx="2" opacity="0.85" />
+            <rect x="166" y="120" width="18" height="80" rx="2" opacity="0.85" />
+            <rect x="190" y="120" width="18" height="75" rx="2" opacity="0.85" />
+            <rect x="214" y="120" width="18" height="72" rx="2" opacity="0.85" />
+            <rect x="238" y="120" width="18" height="68" rx="2" opacity="0.85" />
+            <rect x="262" y="120" width="18" height="64" rx="2" opacity="0.85" />
+            <rect x="286" y="120" width="18" height="60" rx="2" opacity="0.85" />
+            <rect x="310" y="120" width="18" height="57" rx="2" opacity="0.85" />
+            <rect x="334" y="120" width="18" height="54" rx="2" opacity="0.85" />
+            <rect x="358" y="120" width="18" height="50" rx="2" opacity="0.85" />
+            <rect x="382" y="120" width="18" height="47" rx="2" opacity="0.85" />
+            <rect x="406" y="120" width="18" height="44" rx="2" opacity="0.85" />
+            <rect x="430" y="120" width="18" height="42" rx="2" opacity="0.85" />
+            <rect x="454" y="120" width="18" height="40" rx="2" opacity="0.85" />
+            <rect x="478" y="120" width="18" height="38" rx="2" opacity="0.85" />
+            <rect x="502" y="120" width="18" height="36" rx="2" opacity="0.85" />
+            <rect x="526" y="120" width="18" height="35" rx="2" opacity="0.85" />
+            <rect x="550" y="120" width="18" height="34" rx="2" opacity="0.85" />
+            <rect x="574" y="120" width="18" height="33" rx="2" opacity="0.85" /><!-- -1.31 -->
+          </g>
+
+          <!-- 8 Accelerators / Attenuated (y <= 153) -->
+          <g fill="#f59e0b">
+            <rect x="610" y="120" width="18" height="31" rx="2" /><!-- sub-023: -1.24 -->
+            <rect x="634" y="120" width="18" height="27" rx="2" /><!-- sub-032: -1.07 -->
+            <rect x="658" y="120" width="18" height="24" rx="2" /><!-- sub-009: -0.95 -->
+            <rect x="682" y="120" width="18" height="21" rx="2" /><!-- sub-017: -0.85 -->
+            <rect x="706" y="120" width="18" height="20" rx="2" /><!-- sub-005: -0.79 -->
+            <rect x="730" y="120" width="18" height="4" rx="2" /><!-- sub-021: -0.14 -->
+            <!-- True accelerators: above zero -->
+            <rect x="764" y="101" width="18" height="19" rx="2" fill="#ef4444" /><!-- sub-011: +0.75 -->
+            <rect x="788" y="101" width="18" height="19" rx="2" fill="#ef4444" /><!-- sub-035: +0.75 -->
+          </g>
+
+          <text x="320" y="240" fill="#34d399" font-size="12" font-weight="700" text-anchor="middle">22 Decelerators (&Delta;HR &le; &minus;1.30 bpm)</text>
+          <text x="710" y="240" fill="#fbbf24" font-size="12" font-weight="700" text-anchor="middle">8 Attenuated / Accelerators (&Delta;HR &gt; &minus;1.30 bpm)</text>
+        </svg>
+
+        <div class="figure-caption">
+          <strong>Cutoff Clarification:</strong> The &minus;1.30 bpm threshold represents the upper quartile of the empirical maintenance distribution. It is strictly an <em>operational cutoff</em> and <strong>NOT a biological threshold</strong>.
+        </div>
+      </div>
+
+      <!-- Overall Performance Comparison Table -->
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Response Phenotype</th>
+              <th>Cohort Size</th>
+              <th>Mean Maintenance &Delta;HR</th>
+              <th>Overall Accuracy</th>
+              <th>95% Confidence Interval</th>
+              <th>Statistical Comparison</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Decelerators</strong></td>
+              <td>N = 22</td>
+              <td>&minus;2.38 bpm</td>
+              <td><strong>0.7012 (70.1%)</strong></td>
+              <td>[0.640, 0.755]</td>
+              <td rowspan="2">
+                Difference: +0.0498 (d = 0.358)<br>
+                t-test: <strong>p = 0.4468</strong><br>
+                Permutation (10k): <strong>p = 0.3854</strong>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Attenuated / Accelerators</strong></td>
+              <td>N = 8</td>
+              <td>&minus;0.49 bpm</td>
+              <td><strong>0.6514 (65.1%)</strong></td>
+              <td>[0.540, 0.749]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-text">
+        <strong>Validated Finding:</strong> No clear overall working-memory performance difference was detected between the two response phenotypes. (Do not call this proof of cognitive equivalence; statistical power is naturally constrained by N=8).
+      </p>
+    </section>
+
+    <!-- 6. Speed Pressure Finding -->
+    <section class="study-section" id="speed-pressure">
+      <span class="section-tag">06 · Key Behavioral Interaction</span>
+      <h2 class="section-heading">Cognitive Vulnerability Under Rapid Presentation</h2>
+      <p class="section-text">
+        While general accuracy was equivalent, exposing participants to high temporal pacing revealed a selective vulnerability in the attenuated cohort:
+      </p>
+
+      <div class="figure-card">
+        <div class="figure-header">
+          <span class="figure-title">Figure 3: Recall Accuracy Under Time Pressure by Cardiac Phenotype</span>
+          <span class="figure-badge">Mixed-Effects Interaction: &beta; = &minus;0.0762, p = 0.0084</span>
+        </div>
+
+        <!-- SVG Interaction Plot -->
+        <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <rect width="900" height="280" fill="#0f141d" rx="6" />
+
+          <!-- Y Grid -->
+          <line x1="80" y1="50" x2="840" y2="50" stroke="rgba(255,255,255,0.06)" />
+          <text x="70" y="54" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">80%</text>
+
+          <line x1="80" y1="100" x2="840" y2="100" stroke="rgba(255,255,255,0.06)" />
+          <text x="70" y="104" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">70%</text>
+
+          <line x1="80" y1="150" x2="840" y2="150" stroke="rgba(255,255,255,0.06)" />
+          <text x="70" y="154" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">60%</text>
+
+          <line x1="80" y1="200" x2="840" y2="200" stroke="rgba(255,255,255,0.06)" />
+          <text x="70" y="204" fill="#64748b" font-size="10" text-anchor="end" font-family="'JetBrains Mono', monospace">50%</text>
+
+          <line x1="80" y1="240" x2="840" y2="240" stroke="#334155" />
+          <text x="180" y="260" fill="#cbd5e1" font-size="11" text-anchor="middle" font-weight="600">Slow (1.0 s)</text>
+          <text x="380" y="260" fill="#cbd5e1" font-size="11" text-anchor="middle" font-weight="600">Simultaneous</text>
+          <text x="580" y="260" fill="#cbd5e1" font-size="11" text-anchor="middle" font-weight="600">Fast + Delay</text>
+          <text x="760" y="260" fill="#fbbf24" font-size="11" text-anchor="middle" font-weight="700">Fast (0.2 s Rapid)</text>
+
+          <!-- Decelerators Line (Green) -->
+          <!-- Slow: 72.4% -> y = 88 -->
+          <!-- Sim: 74.1% -> y = 79.5 -->
+          <!-- Fast+del: 77.1% -> y = 64.5 -->
+          <!-- Fast: 56.9% -> y = 165.5 -->
+          <polyline points="180,88 380,80 580,65 760,166" fill="none" stroke="#10b981" stroke-width="3" />
+          <circle cx="180" cy="88" r="5" fill="#10b981" />
+          <circle cx="380" cy="80" r="5" fill="#10b981" />
+          <circle cx="580" cy="65" r="5" fill="#10b981" />
+          <circle cx="760" cy="166" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+          <text x="760" y="152" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">56.9%</text>
+
+          <!-- Accelerators Line (Orange) -->
+          <!-- Slow: 69.8% -> y = 101 -->
+          <!-- Sim: 71.3% -> y = 93.5 -->
+          <!-- Fast+del: 71.0% -> y = 95 -->
+          <!-- Fast: 48.5% -> y = 207.5 -->
+          <polyline points="180,101 380,94 580,95 760,208" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4" />
+          <circle cx="180" cy="101" r="5" fill="#f59e0b" />
+          <circle cx="380" cy="94" r="5" fill="#f59e0b" />
+          <circle cx="580" cy="95" r="5" fill="#f59e0b" />
+          <circle cx="760" cy="208" r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+          <text x="760" y="228" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">48.5%</text>
+
+          <!-- Highlight Drop Gap -->
+          <line x1="775" y1="166" x2="775" y2="208" stroke="#ef4444" stroke-width="2" />
+          <text x="785" y="190" fill="#ef4444" font-size="10" font-weight="700">&minus;8.32% gap (p=0.0084)</text>
+
+          <!-- Legend -->
+          <g>
+            <rect x="620" y="20" width="220" height="36" rx="6" fill="#131a24" stroke="rgba(255,255,255,0.08)" />
+            <line x1="635" y1="38" x2="655" y2="38" stroke="#10b981" stroke-width="2.5" />
+            <text x="662" y="41" fill="#34d399" font-size="9.5">Decelerators (N=22)</text>
+            <line x1="740" y1="38" x2="760" y2="38" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="3" />
+            <text x="767" y="41" fill="#fbbf24" font-size="9.5">Accelerators (N=8)</text>
+          </g>
+        </svg>
+
+        <div class="figure-caption">
+          <strong>Speed-Pressure Interaction:</strong> Linear mixed-effects modeling confirmed that the attenuated group suffered a selective accuracy impairment under rapid pacing (&beta; = &minus;0.0762, p = 0.0084). This effect remained invariant after baseline heart-rate adjustment (&beta; = &minus;0.0760, p = 0.0082).
+        </div>
+      </div>
+
+      <div class="sci-alert warning">
+        <strong>Sample Size Rigor:</strong> The attenuated group contains only 8 participants. Sensitivity analyses confirm that wide confidence intervals accompany small between-subject samples. This finding reflects an observational vulnerability under speed pressure, not a proven causal mechanism.
+      </div>
+    </section>
+
+    <!-- 7. HRV Analysis -->
+    <section class="study-section" id="hrv">
+      <span class="section-tag">07 · Autonomic Deep-Dive</span>
+      <h2 class="section-heading">Short-Window HRV Analysis in Working Memory</h2>
+      <p class="section-text">
+        To examine whether the 8 attenuated responders suffered from resting autonomic dysregulation or low vagal tone, short-window HRV metrics were extracted during the 10-second maintenance delay for successful vs failed trials:
+      </p>
+
+      <div class="figure-card">
+        <div class="figure-header">
+          <span class="figure-title">Figure 4: Failure vs. Success Short-Window Autonomic Dispersion</span>
+          <span class="figure-badge">N=8 Attenuated Cohort · FDR Adjusted</span>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>HRV Metric</th>
+                <th>Success Mean</th>
+                <th>Failure Mean</th>
+                <th>Failure &minus; Success Diff</th>
+                <th>Wilcoxon Test</th>
+                <th>BH-FDR p-value</th>
+                <th>Forensic Audit Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight-row">
+                <td><strong>Poincaré SD2</strong></td>
+                <td>66.18 ms</td>
+                <td>82.35 ms</td>
+                <td><strong>+16.17 ms</strong></td>
+                <td>W = 0, p = 0.0078</td>
+                <td><strong>p = 0.0469</strong></td>
+                <td><span class="badge-status valid">Validated (100% concordance)</span></td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Total SDNN</strong></td>
+                <td>53.82 ms</td>
+                <td>69.25 ms</td>
+                <td><strong>+15.43 ms</strong></td>
+                <td>W = 1, p = 0.0156</td>
+                <td><strong>p = 0.0469</strong></td>
+                <td><span class="badge-status valid">Validated (7 of 8 subjects)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cardiac Vagal Index (CVI)</strong></td>
+                <td>4.366</td>
+                <td>4.518</td>
+                <td><strong>+0.152</strong></td>
+                <td>W = 1, p = 0.0156</td>
+                <td><strong>p = 0.0469</strong></td>
+                <td><span class="badge-status valid">Validated (7 of 8 subjects)</span></td>
+              </tr>
+              <tr>
+                <td><strong>RMSSD (Vagal Index)</strong></td>
+                <td>62.45 ms</td>
+                <td>81.66 ms</td>
+                <td>+19.21 ms</td>
+                <td>W = 3, p = 0.0391</td>
+                <td>p = 0.0586</td>
+                <td><span class="badge-status fragile">Downgraded to Fragile (Fails FDR)</span></td>
+              </tr>
+              <tr>
+                <td><strong>SampEn (Sample Entropy)</strong></td>
+                <td>0.98</td>
+                <td>0.95</td>
+                <td>&minus;0.035</td>
+                <td>p = 0.3125</td>
+                <td>&mdash;</td>
+                <td><span class="badge-status retracted">Retracted (23.5% infinite / invalid)</span></td>
+              </tr>
+              <tr>
+                <td><strong>DFA-&alpha;<sub>1</sub> (Fractal)</strong></td>
+                <td>0.88</td>
+                <td>0.85</td>
+                <td>&minus;0.033</td>
+                <td>p = 0.0391</td>
+                <td>p = 0.0586</td>
+                <td><span class="badge-status retracted">Retracted (Negative exponent artifact)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="figure-caption">
+          <strong>Validated HRV Takeaway:</strong> Failed working-memory trials were associated with greater short-term RR-interval variability, particularly in SD2 and SDNN. <em>(Avoid causal claims such as "failure causes autonomic instability").</em>
+        </div>
+      </div>
+
+      <!-- Heterogeneity Table -->
+      <h3 style="color:#ffffff; font-size:1.15rem; margin: 30px 0 14px;">Figure 5: Physiological Heterogeneity Among the 8 Attenuated Responders</h3>
+      <p class="section-text">
+        The 8 attenuated responders did not form a single homogeneous phenotype. They exhibited vast inter-individual physiological divergence:
+      </p>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Subject ID</th>
+              <th>Classification</th>
+              <th>Mean &Delta;HR<sub>maint</sub></th>
+              <th>Accuracy</th>
+              <th>RMSSD</th>
+              <th>SDNN</th>
+              <th>pNN50</th>
+              <th>CSI</th>
+              <th>CVI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sub-005</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;0.79 bpm</td>
+              <td>0.154</td>
+              <td>81.3 ms</td>
+              <td>55.0 ms</td>
+              <td>68.0%</td>
+              <td>0.86</td>
+              <td>4.63</td>
+            </tr>
+            <tr>
+              <td><code>sub-009</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;0.95 bpm</td>
+              <td>0.354</td>
+              <td>74.3 ms</td>
+              <td>63.8 ms</td>
+              <td>19.3%</td>
+              <td>1.62</td>
+              <td>4.44</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><code>sub-011</code></td>
+              <td><strong>True Accelerator</strong></td>
+              <td><strong>+0.75 bpm</strong></td>
+              <td>0.739</td>
+              <td><strong>103.7 ms</strong></td>
+              <td><strong>80.1 ms</strong></td>
+              <td><strong>59.6%</strong></td>
+              <td>1.19</td>
+              <td><strong>4.93</strong></td>
+            </tr>
+            <tr>
+              <td><code>sub-017</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;0.85 bpm</td>
+              <td>0.440</td>
+              <td><strong>28.5 ms</strong></td>
+              <td><strong>29.8 ms</strong></td>
+              <td><strong>3.8%</strong></td>
+              <td><strong>2.16</strong></td>
+              <td><strong>3.82</strong></td>
+            </tr>
+            <tr>
+              <td><code>sub-021</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;0.14 bpm</td>
+              <td>0.874</td>
+              <td>82.4 ms</td>
+              <td>65.0 ms</td>
+              <td>38.4%</td>
+              <td>1.24</td>
+              <td>4.56</td>
+            </tr>
+            <tr>
+              <td><code>sub-023</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;1.24 bpm</td>
+              <td>0.817</td>
+              <td><strong>103.9 ms</strong></td>
+              <td><strong>78.6 ms</strong></td>
+              <td>7.0%</td>
+              <td>1.78</td>
+              <td>3.97</td>
+            </tr>
+            <tr>
+              <td><code>sub-032</code></td>
+              <td>Attenuated Decelerator</td>
+              <td>&minus;1.07 bpm</td>
+              <td>0.257</td>
+              <td>84.6 ms</td>
+              <td>70.9 ms</td>
+              <td>31.6%</td>
+              <td>1.50</td>
+              <td>4.58</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><code>sub-035</code></td>
+              <td><strong>True Accelerator</strong></td>
+              <td><strong>+0.75 bpm</strong></td>
+              <td>0.642</td>
+              <td>58.6 ms</td>
+              <td>56.6 ms</td>
+              <td>24.2%</td>
+              <td>1.77</td>
+              <td>4.45</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sci-alert">
+        <strong>HRV Does Not Explain the Cardiac Phenotype:</strong> Accelerators and Decelerators exhibited identical resting and maintenance HRV distributions (RMSSD: <strong>77.16 vs 75.11 ms, p = 0.3932</strong>; pNN50: <strong>31.49% vs 31.58%, p = 0.9086</strong>). The failure to decelerate during maintenance is not an intrinsic deficit in resting vagal tone.
+      </div>
+    </section>
+
+    <!-- 8. Methodological Audit Section -->
+    <section class="study-section" id="audit">
+      <span class="section-tag">08 · Methodological Checks &amp; Corrections</span>
+      <h2 class="section-heading">Data Verification: What I Caught, Corrected, and Rejected</h2>
+      <p class="section-text">
+        Scientific integrity means checking your own analysis for hidden errors and traps. A rigorous self-audit identified six critical methodological issues that had to be addressed:
+      </p>
+
+      <div class="audit-grid">
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 01</div>
+          <h4>Regression Reference-Level Misinterpretation</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> Significant Condition &times; Recall interaction interpreted relative to Maintenance.</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Model was specified relative to Baseline. Computed direct Recall &minus; Maintenance paired contrast (+0.782 bpm, p = 0.00358).</div>
+          </div>
+        </div>
+
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 02</div>
+          <h4>Data-Derived Phenotype Cutoff</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> &minus;1.30 bpm framed as a general physiological threshold.</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Explicitly redefined as an empirical, data-derived operational cutoff (~73rd percentile), not a universal biological marker.</div>
+          </div>
+        </div>
+
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 03</div>
+          <h4>Short-Window SampEn Degeneracy</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> Reported SampEn decrease during failure (&minus;0.035, p = 0.31).</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Retracted. In 10-second windows (9–15 beats), zero template matches produced 23.5% infinite (&infin;) values.</div>
+          </div>
+        </div>
+
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 04</div>
+          <h4>DFA-&alpha;<sub>1</sub> Negative Exponents</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> Significant fractal scaling reduction (p = 0.0391).</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Retracted. Sourced from contaminated short windows; cannot estimate fractal power laws on 15 beats; produced impossible negative exponents.</div>
+          </div>
+        </div>
+
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 05</div>
+          <h4>Trial-Level Pseudoreplication (CVI)</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> Monotonic graded CVI increase (Success &rarr; Partial &rarr; Fail).</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Simpson's paradox artifact from trial pooling. At participant level, Success and Partial are identical (4.366 vs 4.355).</div>
+          </div>
+        </div>
+
+        <div class="audit-card">
+          <div class="audit-card-num">CORRECTION 06</div>
+          <h4>Multiple-Testing Correction (RMSSD)</h4>
+          <div class="audit-comparison">
+            <div class="audit-orig"><strong>Original:</strong> RMSSD failure effect reported as statistically significant (p = 0.0391).</div>
+            <div class="audit-fixed"><strong>Correction:</strong> Downgraded to fragile. Benjamini-Hochberg FDR p = 0.0586 (not significant); failed in 6 of 8 leave-one-out tests.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Code & Reproducibility -->
+    <section class="study-section">
+      <span class="section-tag">09 · Computational Reproducibility</span>
+      <h2 class="section-heading">Code Architecture &amp; Repository Layout</h2>
+      <p class="section-text">
+        The complete pipeline is modular, fully deterministic, and structured for end-to-end auditability:
+      </p>
+
+      <div class="code-tree">
+FocusFlow-main/
+├── README.md                                  <span class="comment"># Repository overview and execution guide</span>
+├── requirements.txt                           <span class="comment"># Locked dependency environment (MNE, NeuroKit2, Pingouin)</span>
+├── <span class="highlight">pipeline/</span>
+│   ├── <span class="highlight">build_question_physiology_pipeline.py</span>  <span class="comment"># Continuous 1000 Hz ECG cleaning, R-peak cache, trial slicing</span>
+│   ├── <span class="highlight">run_question_cardiac_analysis.py</span>       <span class="comment"># Trajectory modeling, time-on-task, condition contrasts</span>
+│   ├── <span class="highlight">phenotype_cognitive_analysis.py</span>        <span class="comment"># Phenotype classification, LMMs, speed-pressure interaction</span>
+│   ├── <span class="highlight">run_accelerator_hrv_deep_analysis.py</span>   <span class="comment"># Short-window HRV extraction, Wilcoxon &amp; FDR testing</span>
+│   └── <span class="highlight">hrv_wm_pipeline.py</span>                     <span class="comment"># Trial-level feature assembly and validation engine</span>
+├── <span class="highlight">data/</span>
+│   ├── rpeaks_cache/                          <span class="comment"># Cached continuous R-peak arrays (.npz per subject)</span>
+│   ├── question_level_dataset.csv             <span class="comment"># Cleaned question-level physiological dataset</span>
+│   └── question_phase_dataset.csv             <span class="comment"># Phase-segmented beat-to-beat metrics</span>
+├── <span class="highlight">tables/</span>
+│   ├── table1_cardiac_trajectory_audited.csv  <span class="comment"># Verified grand-mean and participant trajectories</span>
+│   ├── table2_condition_contrasts_audited.csv <span class="comment"># Direct Recall-vs-Maintenance contrasts</span>
+│   ├── table4_graded_performance_hrv.csv      <span class="comment"># Success vs Failure HRV distributions</span>
+│   └── table8_extreme_accelerators.csv        <span class="comment"># Individual profiles of the 8 attenuated responders</span>
+└── <span class="highlight">audit/</span>
+    ├── forensic_audit_hrv_report.md           <span class="comment"># Independent adversarial HRV audit trail</span>
+    └── forensic_audit_cardiac_report.md       <span class="comment"># Independent adversarial cardiac analysis audit trail</span>
+      </div>
+    </section>
+
+    <!-- 10. Limitations & Follow-Up -->
+    <section class="study-section" id="limitations">
+      <span class="section-tag">10 · Scientific Honesty &amp; Next Steps</span>
+      <h2 class="section-heading">Methodological Limitations &amp; Preregistered Follow-Up</h2>
+      
+      <div class="sci-alert warning">
+        <strong>Acknowledged Study Limitations:</strong>
+        <ul style="margin: 10px 0 0 18px; line-height: 1.6;">
+          <li><strong>Small Attenuated Subgroup (N=8):</strong> Between-subject comparisons have wider confidence intervals; replication is mandatory.</li>
+          <li><strong>Data-Derived Cutoff:</strong> The &minus;1.30 bpm boundary was empirically derived (~73rd percentile) and is not a biological constant.</li>
+          <li><strong>Observational Association:</strong> The present design demonstrates that cardiac deceleration correlates with memory, not that it causes it.</li>
+          <li><strong>Absence of Synchronous Respiration:</strong> Respiratory rate and tidal depth modulate instantaneous HR; pneumography is required to exclude respiratory confounds.</li>
+          <li><strong>Short-Window Constraints:</strong> 10-second windows cannot support spectral (LF/HF) or nonlinear (SampEn, DFA) HRV metrics.</li>
+        </ul>
+      </div>
+
+      <h3 style="color:#ffffff; font-size:1.15rem; margin: 30px 0 14px;">Prospective Preregistered Follow-Up Protocol</h3>
+      <p class="section-text">
+        To transition these findings from observational hypotheses to confirmed mechanisms:
+      </p>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Experimental Parameter</th>
+              <th>Current Study (ds006848)</th>
+              <th>Preregistered Follow-Up Protocol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sample Size</strong></td>
+              <td>N = 30 (8 Attenuated)</td>
+              <td><strong>N &ge; 80 (Target &ge; 20 Attenuated Responders)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Respiratory Monitoring</strong></td>
+              <td>Unmeasured</td>
+              <td><strong>Continuous pneumography (chest belt) + capnography</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Hypothesis Registration</strong></td>
+              <td>Post-hoc / Exploratory</td>
+              <td><strong>OSF Preregistration of &minus;1.30 bpm cutoff &amp; Fast condition interaction</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Maintenance Delays</strong></td>
+              <td>Fixed 10 s</td>
+              <td><strong>Parametric delays (10 s, 20 s, 30 s) for spectral HRV validation</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 11. Translational Application -->
+    <section class="study-section">
+      <span class="section-tag">11 · Translational Engineering &amp; Embedded Sensing</span>
+      <h2 class="section-heading">Translational Application: From Laboratory ECG to Real-Time Wearables</h2>
+      <p class="section-text">
+        The signal-processing principles established in this 1000 Hz cognitive psychophysiology audit directly inform our real-time wearable sensing architecture, <strong>Novara</strong>. By translating continuous Pan-Tompkins R-peak detection and dynamic HRV algorithms into embedded firmware and streaming WebSocket architectures, we enable real-time detection of cognitive load, stress responses, and recovery states directly from live physiological hardware.
+      </p>
+
+      <div class="video-proof-box">
+        <div class="video-proof-header">
+          <span class="video-live-badge"><span class="live-dot"></span> Live Hardware Acquisition &amp; Real-Time Analytics (COM3)</span>
+          <span class="video-meta-tag">Novara / MaternalGuard Telemetry · Active ECG + PPG Streams</span>
+        </div>
+        <div class="video-wrapper">
+          <video controls playsinline preload="metadata" poster="assets/novara_dashboard_live.png">
+            <source src="assets/novara_live_recording.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="video-proof-caption">
+          <strong>Live Telemetry Proof:</strong> Real-time dual-signal acquisition running over serial COM3. Demonstrates continuous ECG R-peak tracking (Heart Rhythm, 85 bpm, SQI 83%), synchronous photoplethysmography pulse contour (Blood Flow), instant RR interval (706 ms), rhythm variation (76.5 ms), and dynamic autonomic recovery classification.
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Actions -->
+    <div class="flagship-actions-row" style="margin-top: 50px;">
+      <a href="projects.html" class="flagship-btn primary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Projects</span>
+      </a>
+      <a href="journey.html#phase-04" class="flagship-btn secondary" onclick="handleBackToJourney(event, 'phase-04')">
+        <span>Explore Research Journey</span>
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering & Research Projects — Abhishek Kumar Gupta</title>
+  <meta name="description" content="Portfolio of biomedical systems, custom analog hardware, DSP pipelines, and statistical ML models by Abhishek Kumar Gupta. Featuring Novara, Working-Memory Cardiology, and KiCad PCB architectures.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Core Theme Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=projects_v1">
+</head>
+<body>
+
+<!-- Subtle Laboratory Drafting Grid Overlay -->
+<div class="lab-grid-overlay" aria-hidden="true"></div>
+
+<!-- Ambient background directional lighting -->
+<div class="ambient-glow top-right"></div>
+<div class="ambient-glow bottom-left"></div>
+<div class="ambient-glow center-warm"></div>
+
+<!-- ============================================================
+     FLOATING NAVIGATION
+     ============================================================ -->
+<nav class="floating-nav" id="floatingNav">
+  <div class="floating-nav-inner">
+    <a href="index.html" class="nav-logo" title="Abhishek Kumar Gupta — Home">AKG</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="journey.html" class="nav-link" data-section="journey">Journey</a>
+    <a href="projects.html" class="nav-link active" data-section="projects">Projects</a>
+    <a href="index.html#skills" class="nav-link">Skills</a>
+    <a href="index.html#vision" class="nav-link">Vision</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     PROJECTS HERO & INSTRUMENTATION METRICS
+     ============================================================ -->
+<header class="section" style="padding-top: 130px; padding-bottom: 30px;">
+  <div class="section-container">
+    <div class="section-header" style="max-width: 840px; margin: 0 auto; text-align: center;">
+      <div class="section-label">Engineering Projects &amp; Case Studies</div>
+      <h1 class="section-title" style="font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 12px 0 16px;">Engineering &amp; Research Projects</h1>
+      <p class="section-subtitle" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+        Biomedical engineering projects spanning custom hardware, embedded DSP pipelines, and experimental data validation.
+      </p>
+      <div class="section-sep" style="margin: 24px auto;"></div>
+    </div>
+
+    <!-- Research Metrics Bar -->
+    <div class="projects-metrics-bar">
+      <div class="metric-col">
+        <span class="metric-num">5,959</span>
+        <span class="metric-sub">Sternberg Trials Audited</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-col">
+        <span class="metric-num">99.0%</span>
+        <span class="metric-sub">MIT-BIH R-Peak Sensitivity</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-col">
+        <span class="metric-num">1000 Hz</span>
+        <span class="metric-sub">ECG Acquisition Rate</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-col">
+        <span class="metric-num">&lt;15 ms</span>
+        <span class="metric-sub">On-Device Beat Latency</span>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" data-filter="all">All Disciplines</button>
+      <button class="filter-tab" data-filter="hardware">Hardware &amp; PCB</button>
+      <button class="filter-tab" data-filter="signal-processing">Signal Processing</button>
+      <button class="filter-tab" data-filter="machine-learning">Machine Learning &amp; ML</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PROJECTS MASONRY GRID
+     ============================================================ -->
+<section class="section" id="projects" style="padding-top: 10px; padding-bottom: 80px;">
+  <div class="section-container">
+    <div class="masonry-grid" id="masonryGrid">
+
+      <!-- ============================================================
+           PROJECT 1: Question-Level Cardiac Dynamics During Working Memory
+           ============================================================ -->
+      <div class="project-card" data-category="signal-processing machine-learning">
+        <div class="project-thumb">
+          <span class="industry-tag signal-processing">Cognitive &amp; Heart Studies</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Question-Level Cardiac Dynamics During Working Memory</h3>
+          <div class="project-impact">OpenNeuro ds006848 · 30 People · 5,959 Memory Trials · 1000 Hz ECG</div>
+          <ul class="project-bullet-list">
+            <li>Analyzed continuous heart data across 30 people answering 6,000 memory questions.</li>
+            <li>Found that heart rate drops by ~2 BPM while focusing; people whose heart failed to slow made 8.3% more errors when rushed.</li>
+            <li>Conducted rigorous data checks to confirm the heart slowing effect is real.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">1000 Hz Continuous ECG</span>
+            <span class="tech-chip">Heart Slowing (-1.93 BPM)</span>
+            <span class="tech-chip">Speed Pressure Vulnerability</span>
+            <span class="tech-chip">Signal Processing DSP</span>
+            <span class="tech-chip">Linear Mixed Models</span>
+            <span class="tech-chip">Rigorous Baseline Controls</span>
+          </div>
+        </div>
+        <div class="project-proof-gallery">
+          <div class="proof-slot">
+            <div class="proof-icon-wrap" style="background: rgba(53, 211, 154, 0.12); color: #35D39A;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="proof-label">&minus;1.93 BPM Focus Dip</div>
+            <div class="proof-hint">Heart naturally slows down while holding information in mind</div>
+          </div>
+          <div class="proof-slot">
+            <div class="proof-icon-wrap yellow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            </div>
+            <div class="proof-label">p = 0.0084 Speed Deficit</div>
+            <div class="proof-hint">8.3% accuracy crash under rush when heart fails to slow down</div>
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="cardiac-working-memory.html" class="cta-btn">Explore Full Case Study →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 2: DREAMER — Physiological Emotion Recognition Audit
+           ============================================================ -->
+      <div class="project-card" data-category="machine-learning signal-processing">
+        <div class="project-thumb">
+          <span class="industry-tag machine-learning">ML / Physiological Research</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="7" r="2"/><circle cx="19" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><path d="M7 8l3 3m4 2l3 3m-7-2l-3 3m7-7l3-3"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>DREAMER — Subject-Held-Out Physiological Emotion Recognition</h3>
+          <div class="project-impact">23 People · 252 Trials · Auditing Emotion AI Claims</div>
+          <ul class="project-bullet-list">
+            <li>Tested claims that AI can read emotions from smartwatch sensors using a movie-watching benchmark dataset.</li>
+            <li>Showed that on new people, model accuracy drops to a coin flip (~55%), disproving claims of general emotion reading.</li>
+            <li>Revealed that the AI was just memorizing which movie clip played rather than reading true feelings.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">Brain EEG (14-channel)</span>
+            <span class="tech-chip">Heart ECG</span>
+            <span class="tech-chip">DREAMER Dataset</span>
+            <span class="tech-chip">Emotion AI Audit</span>
+            <span class="tech-chip">Fair Generalization Test</span>
+            <span class="tech-chip">Data Leakage Checks</span>
+          </div>
+        </div>
+        <div class="project-proof-gallery">
+          <div class="proof-slot has-image">
+            <img src="assets/dreamer_experiment_b_dominance.png" alt="Dominance Random Forest Snapshots">
+          </div>
+          <div class="proof-slot has-image">
+            <img src="assets/heart_rate_zones_emotion.png?v=box_plot_v2" alt="Heart Rate Zones by Emotion Boxplot">
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="dreamer-emotion.html" class="cta-btn">Read Research Findings →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 3: DIY Dual-Modality ECG & PPG Hardware Rig
+           ============================================================ -->
+      <div class="project-card" data-category="hardware signal-processing">
+        <div class="project-thumb">
+          <span class="industry-tag hardware">Hardware Acquisition</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>DIY Dual-Modality ECG &amp; PPG Hardware Acquisition Rig</h3>
+          <div class="project-impact">Benchtop Analog Front-End &amp; Synchronous Dual-Trace Oscilloscope</div>
+          <ul class="project-bullet-list">
+            <li>Built a benchtop sensor rig capturing electrical heart signals (ECG) and optical pulse waves (PPG) at the same time.</li>
+            <li>Cleaned electrical noise with analog filters and streamed live waveforms to a custom PC oscilloscope screen.</li>
+            <li>Measured pulse transit time (how long blood takes to travel from the heart to the fingertip).</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">AD8232 AFE</span>
+            <span class="tech-chip">MAX30102 Optical</span>
+            <span class="tech-chip">ESP32 FreeRTOS</span>
+            <span class="tech-chip">Python Telemetry</span>
+            <span class="tech-chip">Analog Filtering</span>
+            <span class="tech-chip">Pulse Transit Time (PTT)</span>
+          </div>
+        </div>
+        <div class="project-proof-gallery">
+          <div class="proof-slot has-image">
+            <img src="assets/diy_ecg_ppg_live_dual_trace.jpg" alt="Live Dual-Trace Oscilloscope Testing">
+          </div>
+          <div class="proof-slot has-image">
+            <img src="assets/diy_ecg_ppg_breadboard_rig.jpg" alt="Benchtop Dual-Modality Breadboard Rig">
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="diy-ecg.html" class="cta-btn">Inspect Hardware Rig →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 4: Lunar — Menstrual Cycle Physiological Data Validation
+           ============================================================ -->
+      <div class="project-card" data-category="signal-processing machine-learning">
+        <div class="project-thumb">
+          <span class="industry-tag signal-processing">Physiological Data &amp; Validation</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Lunar — Menstrual Cycle Physiological Data Analysis &amp; Validation</h3>
+          <div class="project-impact">42 People · Longitudinal Physiological Modeling · mcPHASES</div>
+          <ul class="project-bullet-list">
+            <li>Audited continuous smartwatch health data from 42 women across natural monthly cycles.</li>
+            <li>Quantified cycle phase variation, establishing a realistic effect size of Cohen's d = 0.27.</li>
+            <li>Confirmed a genuine dip in nighttime heart variability 24–36 hours before painful cramps start.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">PhysioNet mcPHASES</span>
+            <span class="tech-chip">N=42 Cohort</span>
+            <span class="tech-chip">Longitudinal HR/HRV</span>
+            <span class="tech-chip">Data Quality Audit</span>
+            <span class="tech-chip">Feature Baselines</span>
+            <span class="tech-chip">Cohen's d = 0.27</span>
+          </div>
+        </div>
+        <div class="project-proof-gallery">
+          <div class="proof-slot has-image">
+            <img src="assets/lunar_cramp_trajectory.png" alt="Lunar Pre-Cramp Onset Trajectory Deviation">
+          </div>
+          <div class="proof-slot has-image">
+            <img src="assets/lunar_trajectory_deviation.png" alt="Lunar 7-Day Baseline Deviation Trajectories">
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="lunar.html" class="cta-btn">Explore Case Study →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 5: Novara — Wearable Physiological Monitoring Platform
+           ============================================================ -->
+      <div class="project-card" data-category="signal-processing hardware machine-learning">
+        <div class="project-thumb">
+          <span class="industry-tag signal-processing">Flagship Hardware &amp; ML</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Novara — Wearable Physiological Monitoring for Hypertension &amp; Preeclampsia</h3>
+          <div class="project-impact">Hospital Benchmark Evaluation: 99.0% Sensitivity, 99.9% +P</div>
+          <ul class="project-bullet-list">
+            <li>Built a wearable device to catch early signs of high blood pressure using heart (ECG) and pulse (PPG) sensors.</li>
+            <li>Runs on ESP32 with firmware detecting heartbeats in &lt;15ms with 99.0% hospital benchmark accuracy.</li>
+            <li>Combines heart metrics with personal temperature and sleep baselines to prevent false alarms.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">ESP32</span>
+            <span class="tech-chip">AD8232 ECG</span>
+            <span class="tech-chip">MAX30102 PPG</span>
+            <span class="tech-chip">ADS1115 (16-bit)</span>
+            <span class="tech-chip">Pan-Tompkins DSP</span>
+            <span class="tech-chip">Flutter Dashboard</span>
+            <span class="tech-chip">MIT-BIH AAMI Validation</span>
+          </div>
+        </div>
+        <!-- PROOF GALLERY -->
+        <div class="project-proof-gallery">
+          <div class="proof-slot has-image">
+            <img src="assets/novara_wearable_hardware.jpg" alt="Novara Ergonomic Finger-to-Wrist Wearable Device Prototype">
+          </div>
+          <div class="proof-slot has-image">
+            <img src="assets/novara_dashboard_live.png" alt="Novara Live Proof Telemetry Monitor">
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="novara.html" class="cta-btn">Explore Case Study →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 6: Custom BLE Wearable Health Sensor Node — PCB Design (KiCad)
+           ============================================================ -->
+      <div class="project-card" data-category="hardware">
+        <div class="project-thumb">
+          <span class="industry-tag hardware">Hardware Design &amp; KiCad EDA</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Custom BLE Wearable Health Sensor Node — PCB Design (KiCad)</h3>
+          <div class="project-impact">Custom 4-layer rigid-flex design: Main Board, Sensor Board &amp; Flex Wire Interconnect</div>
+          <ul class="project-bullet-list">
+            <li>Designed a 4-layer wearable board in KiCad combining Bluetooth, pulse, motion, and precision temperature sensors.</li>
+            <li>Built with USB-C battery charging, ultra-low-noise power rails, and tuned antenna matching for long battery life.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">KiCad EDA</span>
+            <span class="tech-chip">nRF52833 BLE SoC</span>
+            <span class="tech-chip">MAX30101 PPG</span>
+            <span class="tech-chip">TMP117 Precision Temp</span>
+            <span class="tech-chip">BMA400 Ultra-Low-Power IMU</span>
+            <span class="tech-chip">USB-C LiPo Charging</span>
+            <span class="tech-chip">Split RF/Analog LDO Rails</span>
+            <span class="tech-chip">Antenna Matching &amp; ESD</span>
+          </div>
+        </div>
+
+        <!-- KiCad 3D PCB Video Clip -->
+        <div class="video-proof-box pcb-video-box">
+          <div class="video-proof-header">
+            <span class="video-live-badge"><span class="live-dot"></span> KiCad 3D Hardware CAD Inspection</span>
+            <span class="video-meta-tag">3D Raytraced CAD · Multi-Board Stackup</span>
+          </div>
+          <div class="video-wrapper">
+            <video controls playsinline preload="metadata" poster="assets/novara_main_board.png">
+              <source src="assets/novara_kicad_pcb.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-proof-caption">
+            <strong>Custom BLE Health Sensor Node KiCad CAD:</strong> 3D CAD dynamic inspection of the hardware layout showing multi-layer trace escape routing, component placement, and modular interconnect assembly.
+          </div>
+        </div>
+
+        <!-- Modular Hardware Boards Gallery -->
+        <div class="modular-pcb-showcase">
+          <div class="modular-pcb-header">
+            <div class="modular-pcb-title">Modular Hardware Architecture</div>
+            <span class="modular-pcb-tag">KiCad 3D Physical Models</span>
+          </div>
+          <div class="modular-pcb-grid">
+            <!-- 1. Main Board -->
+            <div class="pcb-module-card">
+              <div class="pcb-module-thumb">
+                <img src="assets/novara_main_board.png" alt="Novara Main Processing Board in KiCad 3D">
+                <span class="pcb-module-badge green">01 · Main Processing Board</span>
+              </div>
+              <div class="pcb-module-content">
+                <h4>Main Processing Board</h4>
+                <p>Central computing hub housing MCU, power regulation, tact switch, USB communication &amp; digital bus routing.</p>
+              </div>
+            </div>
+
+            <!-- 2. Sensor Board -->
+            <div class="pcb-module-card">
+              <div class="pcb-module-thumb">
+                <img src="assets/novara_sensor_board.png" alt="Novara Sensor Satellite Board in KiCad 3D">
+                <span class="pcb-module-badge yellow">02 · Sensor Board</span>
+              </div>
+              <div class="pcb-module-content">
+                <h4>Sensor Satellite Board</h4>
+                <p>Ultra-compact physiological sensing front-end with analog filtering passives and dedicated ground plane isolation.</p>
+              </div>
+            </div>
+
+            <!-- 3. Flex Wire -->
+            <div class="pcb-module-card full-width">
+              <div class="pcb-module-thumb flex-wire-thumb">
+                <img src="assets/novara_flex_cable.png" alt="Novara Flex Wire Interconnect in KiCad 3D">
+                <span class="pcb-module-badge">03 · Flex Wire Interconnect</span>
+              </div>
+              <div class="pcb-module-content">
+                <h4>Flex Wire (FPC Ribbon Cable)</h4>
+                <p>Custom flexible PCB bridge connecting Main Board to Sensor Board, enabling ergonomic body contour flexibility and low-strain skin placement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-cta-overlay">
+          <a href="novara.html" class="cta-btn">Inspect Hardware Investigation →</a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PROJECT 7: Eye-Controlled Car for Assistive Mobility
+           ============================================================ -->
+      <div class="project-card" data-category="hardware machine-learning signal-processing">
+        <div class="project-thumb">
+          <span class="industry-tag hardware">Assistive Robotics &amp; Biosignals</span>
+          <div class="thumb-pattern"></div>
+          <div class="thumb-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px;">
+            <h3 style="margin-bottom: 0;">Eye-Controlled Car for Assistive Mobility</h3>
+            <a href="https://github.com/abhisheknote1234-writ/Eye_Control_Movement" target="_blank" class="github-project-badge" title="View Source on GitHub">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>GitHub</span>
+              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </a>
+          </div>
+          <div class="project-impact">Hands-Free Vehicle Control via Eye Movements &amp; Blinks</div>
+          <ul class="project-bullet-list">
+            <li>Built a 4-wheel robot car controlled hands-free using eye movements and blinks for people with mobility impairments.</li>
+            <li>Intentional eye blinks toggle Start / Stop, while looking left or right steers the car.</li>
+            <li>Streams live eye signals to an Arduino over serial, filtering out facial muscle noise to avoid accidental moves.</li>
+          </ul>
+          <div class="project-techs">
+            <span class="tech-chip">Eye Tracking (EOG)</span>
+            <span class="tech-chip">Blink Detection</span>
+            <span class="tech-chip">Arduino Uno</span>
+            <span class="tech-chip">Motor Driver Robotics</span>
+            <span class="tech-chip">Python Telemetry</span>
+            <span class="tech-chip">Assistive Technology</span>
+          </div>
+        </div>
+        <div class="project-proof-gallery">
+          <div class="proof-slot has-image">
+            <img src="assets/eog_car_prototype.png" alt="Eye Controlled Robot Car Hardware Prototype">
+          </div>
+          <div class="proof-slot has-image">
+            <img src="assets/eog_system_control.png" alt="EOG Live System Control Dashboard">
+          </div>
+        </div>
+        <div class="project-cta-overlay">
+          <a href="eye-control.html" class="cta-btn">Explore Full Case Study →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo">AKG</div>
+      <div class="footer-info">
+        <div class="footer-name">Abhishek Kumar Gupta</div>
+        <div class="footer-title">Biomedical Systems &amp; Signal Processing Researcher</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="journey.html" class="footer-link">Journey</a>
+      <a href="projects.html" class="footer-link active">Projects</a>
+      <a href="https://github.com/abhisheknote1234-writ" target="_blank" class="footer-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/abhishek-gupta-380a09387/" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+    <div class="footer-copy">© 2026 Abhishek Kumar Gupta. Built with curiosity and solder fumes.</div>
+  </div>
+</footer>
+
+<!-- Core 3D & Animation Libraries -->
+<script src="assets/three.min.js"></script>
+<script src="assets/gsap.min.js"></script>
+<script src="assets/ScrollTrigger.min.js"></script>
+<script src="assets/lenis.min.js"></script>
+
+<!-- WebGL Background -->
+<script src="three-scene.js"></script>
+
+<!-- Coordinated GSAP Scrollytelling & Filter Architecture -->
+<script src="main-animation.js"></script>
+
+</body>
+</html>

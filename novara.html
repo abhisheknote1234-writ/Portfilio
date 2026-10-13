@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novara — Wearable Health + AI Platform — Research Case Study</title>
+  <meta name="description" content="Technical investigation and hardware case study on Novara: a custom 4-layer BLE wearable combining dual ECG, PPG, temperature, and edge AI for cognitive and autonomic health monitoring.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫀</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-07" class="back-link" onclick="handleBackToJourney(event, 'phase-07')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#hardware" class="quick-anchor-btn">Hardware &amp; PCB</a>
+        <a href="#method" class="quick-anchor-btn">Firmware &amp; DSP</a>
+        <a href="#results" class="quick-anchor-btn">Telemetry Proof</a>
+        <a href="#failures" class="quick-anchor-btn">What Failed</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+        <a href="#limitations" class="quick-anchor-btn">Limitations</a>
+        <a href="#next" class="quick-anchor-btn">Next Step</a>
+        <a href="#proof" class="quick-anchor-btn">KiCad 3D &amp; Video</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">FLAGSHIP HARDWARE · WEARABLE HEALTH PLATFORM</div>
+      <div class="study-pill-row">
+        <span class="study-pill green">Custom 4-Layer BLE PCB</span>
+        <span class="study-pill yellow">Dual ECG + PPG Telemetry</span>
+        <span class="study-pill brown">99.0% MIT-BIH Accuracy · &lt;15ms Latency</span>
+      </div>
+
+      <h1 class="study-title">Novara — Wearable Health + AI Platform</h1>
+      <p class="study-lead">
+        Novara is a complete wearable health device I designed and built from scratch. It measures both the electrical heart beat (ECG) and optical blood pulse (PPG), plus body temperature and movement. By combining these signals, it can track real cardiovascular health—like early signs of high blood pressure—and check mental stress accurately without false alarms.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Hardware Build</div>
+          <div class="value">Custom 4-Layer Circuit Board (KiCad)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Sensors Included</div>
+          <div class="value">Heart (ECG) + Optical Pulse + Temp + Motion</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Test Accuracy</div>
+          <div class="value" style="color: var(--accent-green-bright);">99.0% on Standard Hospital ECG Data</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Speed on Chip</div>
+          <div class="value" style="color: var(--accent-yellow-bright);">&lt; 15 ms Live Beat Detection</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">The Big Picture: Real Health Tracking Meets Practical AI</h2>
+      <p class="section-text">
+        Most smartwatches try to guess stress or emotion from a single sensor. But as my earlier experiments proved, things like sleeping poorly, having a mild fever, or just standing up completely fool single-sensor algorithms.
+      </p>
+      <p class="section-text">
+        <strong>Novara</strong> was built to solve this from the ground up: I designed the physical circuit board in KiCad, wrote the code that runs on the chip, and created a live wireless dashboard so doctors or users can see clean heartbeats, pulse timing, and true recovery metrics.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Engineering Goal</span>
+      <h2 class="section-heading">What was I trying to achieve?</h2>
+      <p class="section-text">
+        Can we build a small, wearable device that reads heartbeats and blood flow with medical-grade accuracy, calculates heart metrics in real time (under 15 milliseconds), and avoids false alarms from fever or movement—all while running smoothly on battery?
+      </p>
+    </section>
+
+    <!-- 03 HARDWARE & PCB -->
+    <section class="study-section" id="hardware">
+      <span class="section-tag">03 · Hardware Architecture &amp; Circuit Board</span>
+      <h2 class="section-heading">Building the Physical Device (KiCad PCB)</h2>
+      <p class="section-text">
+        Novara is split into separate modules so that sensitive heart sensors stay far away from electrical noise created by Bluetooth and battery circuits.
+      </p>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Part of Device</th>
+              <th>Chips / Hardware</th>
+              <th>What It Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Main Processing Board</td>
+              <td>ESP32-S3 Microcontroller</td>
+              <td>The device's brain: handles Bluetooth, battery charging, power regulation, and fast on-device math.</td>
+            </tr>
+            <tr>
+              <td>Satellite Sensor Board</td>
+              <td>Heart (ECG) + Optical Pulse (PPG) Sensors</td>
+              <td>The tiny sensing tip placed against the skin to capture electrical beats and optical blood pulses.</td>
+            </tr>
+            <tr>
+              <td>Flexible Ribbon Cable</td>
+              <td>Shielded Flex Wire</td>
+              <td>A thin, bendable ribbon cable connecting the sensor tip to the wrist pod so it fits comfortably on the body.</td>
+            </tr>
+            <tr>
+              <td>Temperature &amp; Motion</td>
+              <td>Precision Thermistor + Motion Sensor</td>
+              <td>Catches mild fevers (0.05°C accuracy) and detects walking or standing so movement isn't mistaken for stress.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Physical Wearable Prototype Feature Card -->
+      <div class="figure-card" style="margin: 28px 0;">
+        <div class="figure-header">
+          <div class="figure-title">Physical Wearable Form Factor &amp; Ergonomics</div>
+          <div class="figure-badge">Dual-Optical Finger Ring + Wrist Pod</div>
+        </div>
+
+        <div style="background: #0B0F13; border-radius: 6px; overflow: hidden; padding: 20px; text-align: center;">
+          <img src="assets/novara_wearable_hardware.jpg" alt="Novara Ergonomic Finger-to-Wrist Wearable Device Prototype" style="max-width: 500px; width: 100%; height: auto; border-radius: 6px; display: inline-block; box-shadow: 0 16px 36px rgba(0,0,0,0.7);">
+        </div>
+
+        <div class="figure-caption">
+          <strong>Physical Prototype:</strong> Novara uses a comfortable ergonomic design. A small ring on the finger captures optical blood flow, while a flexible ribbon cable connects to a central wrist pod containing the main microcontroller, battery, and Bluetooth transmitter.
+        </div>
+      </div>
+
+      <!-- KiCad Renders Gallery -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/novara_main_board.png" alt="Novara Main Board KiCad 3D" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Main Processing Board:</strong> 4-layer custom circuit board designed in KiCad showing processor, power chip, and antenna.
+          </div>
+        </div>
+
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/novara_sensor_board.png" alt="Novara Sensor Satellite Board" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Satellite Sensor Board:</strong> Ultra-small sensor board housing the optical light sensor and heart electrodes.
+          </div>
+        </div>
+
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/novara_flex_cable.png" alt="Novara Flex Interconnect" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Flexible Ribbon Cable:</strong> Bendable connecting ribbon that allows natural hand movement without pulling wires.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 METHOD -->
+    <section class="study-section" id="method">
+      <span class="section-tag">04 · Code &amp; Signal Processing</span>
+      <h2 class="section-heading">How the Signals are Processed in Real Time</h2>
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 01</div>
+          <div class="method-step-title">Sampling Together</div>
+          <div class="method-step-desc">
+            Reads both heart electricity (ECG) and optical blood flow (PPG) 1,000 times a second so both signals stay perfectly in sync.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 02</div>
+          <div class="method-step-title">Instant Beat Detection</div>
+          <div class="method-step-desc">
+            Finds heartbeats in under 15 milliseconds directly on the wearable chip, matching standard hospital ECG benchmarks with 99.0% accuracy.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 03</div>
+          <div class="method-step-title">Pulse Travel Speed (PTT)</div>
+          <div class="method-step-desc">
+            Measures how many milliseconds it takes for a blood wave to travel from the heart to the finger—a key clue for blood pressure without an arm cuff.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 04</div>
+          <div class="method-step-title">Context-Aware AI</div>
+          <div class="method-step-desc">
+            Compares live heart variability against the person's own 7-day average, sleep hours, and temperature to give honest stress readings without false alarms.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 RESULTS & PROOF -->
+    <section class="study-section" id="results">
+      <span class="section-tag">05 · Empirical Results &amp; Live Proof</span>
+      <h2 class="section-heading">Live Device Demonstration (Active Stream)</h2>
+      <p class="section-text">
+        Novara was validated with live data streaming directly from the physical hardware. The video below shows the device in action: tracking live heartbeats (85 beats per min), measuring optical blood flow, calculating beat-to-beat timing, and estimating body recovery in real time.
+      </p>
+
+      <!-- Video Proof Container: Live Dashboard -->
+      <div class="figure-card" id="proof">
+        <div class="figure-header">
+          <div class="figure-title">Live Hardware Telemetry Video · COM3 Serial Stream</div>
+          <div class="figure-badge">Active ECG + PPG Waveforms</div>
+        </div>
+
+        <div style="position: relative; border-radius: 6px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.1);">
+          <video controls playsinline preload="metadata" poster="assets/novara_dashboard_live.png" style="width: 100%; height: auto; display: block;">
+            <source src="assets/novara_live_recording.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="figure-caption">
+          <strong>Hardware &amp; Software Proof:</strong> Live screen recording showing the Novara device actively streaming clean heart beats (85 bpm), blood flow waves, and recovery metrics over USB/Bluetooth.
+        </div>
+      </div>
+
+      <!-- Video Proof Container 2: KiCad PCB 3D Video -->
+      <div class="figure-card">
+        <div class="figure-header">
+          <div class="figure-title">KiCad Hardware CAD Dynamic Inspection Video</div>
+          <div class="figure-badge">Multi-Layer Trace Escape &amp; Routing</div>
+        </div>
+
+        <div style="position: relative; border-radius: 6px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.1);">
+          <video controls playsinline preload="metadata" poster="assets/novara_main_board.png" style="width: 100%; height: auto; display: block;">
+            <source src="assets/novara_kicad_pcb.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="figure-caption">
+          <strong>Hardware 3D Demonstration:</strong> 3D CAD walk-through of the custom circuit board layout, showing component placement, wiring, and flexible cable connections.
+        </div>
+      </div>
+
+      <!-- Telemetry Screenshots -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/novara_dashboard_live.png" alt="Novara Dashboard Live Telemetry" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Live Dashboard Interface:</strong> Real-time streaming metrics including 85 BPM rate, 706 ms beat interval, and 76.5 ms heart variability.
+          </div>
+        </div>
+
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/dashboard_screenshot.png" alt="Novara Real-Time Telemetry" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Dual Sensor Telemetry:</strong> Shows the electrical heart beat running side-by-side with the optical blood pulse wave.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 WHAT FAILED -->
+    <section class="study-section" id="failures">
+      <span class="section-tag">06 · What Went Wrong &amp; Real Obstacles</span>
+      <h2 class="section-heading">Hardware Challenges I Solved</h2>
+      <p class="section-text">
+        Fitting sensitive analog heart amplifiers right next to high-speed digital processors on a tiny circuit board caused real engineering headaches:
+      </p>
+      <div class="sci-alert warning">
+        <strong>1. Electrical Noise from Battery Charging:</strong> Fast electrical switching in the power circuit initially created static fuzz across the heart signals. I fixed this by redesigning the circuit board with isolated ground shields and electrical filters.
+      </div>
+      <div class="sci-alert warning">
+        <strong>2. Weak Signal Across the Ribbon Cable:</strong> The first flexible cable lost signal strength between the finger and the wrist. I solved this by boosting (buffering) the signal directly at the sensor tip before sending it down the wire.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">What I Learned: True Hardware + Software Integration</h2>
+      <p class="section-text">
+        You cannot build reliable health tech with code alone or hardware alone. A trustworthy device needs clean hardware wiring, fast on-chip code, and smart algorithms that understand real human context.
+      </p>
+    </section>
+
+    <!-- 08 LIMITATIONS -->
+    <section class="study-section" id="limitations">
+      <span class="section-tag">08 · Current Limitations</span>
+      <h2 class="section-heading">Honest Trade-Offs</h2>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8;">
+        <li>Streaming 1,000 samples per second continuously over Bluetooth limits battery life to about 14 hours per charge.</li>
+        <li>Optical finger sensors can still pick up motion glitches during vigorous running or heavy hand shaking.</li>
+        <li>Needs further testing on wider clinical patient groups before hospital use.</li>
+      </ul>
+    </section>
+
+    <!-- 09 NEXT STEP -->
+    <section class="study-section" id="next">
+      <span class="section-tag">09 · Evolution</span>
+      <h2 class="section-heading">Next Phase of Development</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Future Roadmap: Clinical Pilot &amp; Edge Neuromorphic Models</h4>
+          <p>
+            Fabricating custom injection-molded biocompatible enclosures, implementing tinyML quantized neural networks directly on the ESP32-S3 vector instructions, and initiating clinical pilot studies for nocturnal cognitive recovery and autonomic health tracking.
+          </p>
+        </div>
+        <a href="journey.html#phase-07" class="next-step-btn" onclick="handleBackToJourney(event, 'phase-07')">
+          <span>Return to Research Journey</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 10 PROOF -->
+    <section class="study-section">
+      <span class="section-tag">10 · Specifications Summary</span>
+      <h2 class="section-heading">Novara Platform Validation Specs</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Specification</th>
+              <th>Achieved Benchmark</th>
+              <th>Validation Dataset / Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>R-Peak Sensitivity</td>
+              <td>99.0%</td>
+              <td>MIT-BIH Arrhythmia Database (N=48 records)</td>
+            </tr>
+            <tr>
+              <td>On-Device Beat Latency</td>
+              <td>&lt; 15 ms</td>
+              <td>FreeRTOS hardware timer tick profiling</td>
+            </tr>
+            <tr>
+              <td>Acquisition Sample Rate</td>
+              <td>1000 Hz continuous</td>
+              <td>ESP32 dual ADC simultaneous timer interrupt</td>
+            </tr>
+            <tr>
+              <td>Wireless Telemetry</td>
+              <td>BLE 5.0 (2 Mbps PHY)</td>
+              <td>Synchronous streaming to desktop dashboard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Research Case Study · <a href="journey.html#phase-07" onclick="handleBackToJourney(event, 'phase-07')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a> · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhishek Kumar Gupta — Biomedical Signal Processing & Wearable Systems</title>
+  <meta name="description" content="Research portfolio of Abhishek Kumar Gupta — building physiological sensing systems from hardware to ML. ECG/PPG signal processing, HRV analysis, emotion recognition, and wearable device design.">
+
+  <!-- Google Fonts: Space Grotesk (Display/Headings) + Plus Jakarta Sans (Body) + JetBrains Mono (Code/Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Custom Theme -->
+  <link rel="stylesheet" href="style.css?v=light_v2">
+
+    <style>
+    /* Vision Card Author Row */
+    .manifesto-author-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 4px 16px 4px 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 40px;
+    }
+
+    .manifesto-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(44, 203, 145, 0.6);
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Footer Profile */
+    .footer-profile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .footer-avatar-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid rgba(44, 203, 145, 0.45);
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .footer-profile-info .footer-name {
+      margin-bottom: 2px;
+    }
+
+    .footer-profile-info .footer-role {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- WebGL 3D Scientific Laboratory Artifacts Canvas -->
+<canvas id="webgl-canvas" class="webgl-canvas" aria-hidden="true"></canvas>
+
+<!-- Subtle Laboratory Drafting Grid Overlay -->
+<div class="lab-grid-overlay" aria-hidden="true"></div>
+
+<!-- Ambient background directional lighting -->
+<div class="ambient-glow top-right"></div>
+<div class="ambient-glow bottom-left"></div>
+<div class="ambient-glow center-warm"></div>
+
+<!-- ============================================================
+     FLOATING NAVIGATION
+     ============================================================ -->
+<nav class="floating-nav" id="floatingNav">
+  <div class="floating-nav-inner">
+    <a href="index.html" class="nav-logo" title="Abhishek Kumar Gupta — Home">AKG</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="journey.html" class="nav-link" data-section="journey">Journey</a>
+    <a href="projects.html" class="nav-link" data-section="projects">Projects</a>
+    <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+    <a href="#vision" class="nav-link" data-section="vision">Vision</a>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     HERO SECTION — PARALLAX
+     ============================================================ -->
+<section class="hero" id="hero">
+  <!-- Geometric parallax shapes -->
+  <div class="hero-shapes" id="heroShapes">
+    <div class="geo-shape circle-1" data-speed="0.02"></div>
+    <div class="geo-shape circle-2" data-speed="0.03"></div>
+    <div class="geo-shape circle-3" data-speed="0.015"></div>
+    <div class="geo-shape hex-1" data-speed="0.04"></div>
+    <div class="geo-shape hex-2" data-speed="0.035"></div>
+    <div class="geo-shape dot-grid" data-speed="0.01"></div>
+    <div class="geo-shape line-1" data-speed="0.025"></div>
+    <div class="geo-shape line-2" data-speed="0.02"></div>
+  </div>
+
+  <!-- ECG scrolling line -->
+  <div class="hero-ecg-line">
+    <svg viewBox="0 0 1800 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="ecgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2CCB91" stop-opacity="0.8" />
+          <stop offset="70%" stop-color="#2CCB91" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#6FA8C9" stop-opacity="0.8" />
+        </linearGradient>
+      </defs>
+      <path d="M0,30 L40,30 L50,30 L55,28 L60,15 L62,5 L65,50 L68,25 L72,30 L100,30 L130,30 L140,30 L145,28 L150,15 L152,5 L155,50 L158,25 L162,30 L190,30 L220,30 L230,30 L235,28 L240,15 L242,5 L245,50 L248,25 L252,30 L280,30 L310,30 L320,30 L325,28 L330,15 L332,5 L335,50 L338,25 L342,30 L370,30 L400,30 L410,30 L415,28 L420,15 L422,5 L425,50 L428,25 L432,30 L460,30 L490,30 L500,30 L505,28 L510,15 L512,5 L515,50 L518,25 L522,30 L550,30 L580,30 L590,30 L595,28 L600,15 L602,5 L605,50 L608,25 L612,30 L640,30 L670,30 L680,30 L685,28 L690,15 L692,5 L695,50 L698,25 L702,30 L730,30 L760,30 L770,30 L775,28 L780,15 L782,5 L785,50 L788,25 L792,30 L820,30 L850,30 L860,30 L865,28 L870,15 L872,5 L875,50 L878,25 L882,30 L900,30 L940,30 L950,30 L955,28 L960,15 L962,5 L965,50 L968,25 L972,30 L1000,30 L1030,30 L1040,30 L1045,28 L1050,15 L1052,5 L1055,50 L1058,25 L1062,30 L1090,30 L1120,30 L1130,30 L1135,28 L1140,15 L1142,5 L1145,50 L1148,25 L1152,30 L1180,30 L1210,30 L1220,30 L1225,28 L1230,15 L1232,5 L1235,50 L1238,25 L1242,30 L1270,30 L1300,30 L1310,30 L1315,28 L1320,15 L1322,5 L1325,50 L1328,25 L1332,30 L1360,30 L1390,30 L1400,30 L1405,28 L1410,15 L1412,5 L1415,50 L1418,25 L1422,30 L1450,30 L1480,30 L1490,30 L1495,28 L1500,15 L1502,5 L1505,50 L1508,25 L1512,30 L1540,30 L1570,30 L1580,30 L1585,28 L1590,15 L1592,5 L1595,50 L1598,25 L1602,30 L1630,30 L1660,30 L1670,30 L1675,28 L1680,15 L1682,5 L1685,50 L1688,25 L1692,30 L1720,30 L1750,30 L1760,30 L1765,28 L1770,15 L1772,5 L1775,50 L1778,25 L1782,30 L1800,30"
+            fill="none" stroke="url(#ecgGrad)" stroke-width="1.8" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Hero Content — Clean Minimal Layout -->
+  <div class="hero-container">
+    <div class="hero-grid">
+      <!-- Left: Name & Intro -->
+      <div class="hero-intro-col">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          ECE · Delhi Technological University
+        </div>
+
+        <h1 class="hero-name">Abhishek Kumar<br><span class="hero-surname">Gupta</span></h1>
+
+        <p class="hero-tagline">
+          Building <span class="highlight">wearable physiological sensors</span>, 1000 Hz real-time DSP, and auditing emotion AI models.
+        </p>
+
+        <div class="hero-actions-group">
+          <div class="hero-cta-row">
+            <a href="journey.html" class="hero-btn primary">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Explore Journey
+            </a>
+            <a href="projects.html" class="hero-btn secondary">
+              View Projects
+            </a>
+          </div>
+
+          <div class="hero-socials">
+            <a href="https://github.com/abhisheknote1234-writ" target="_blank" class="social-icon" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/abhishek-gupta-380a09387/" target="_blank" class="social-icon" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Avatar portrait -->
+      <div class="hero-dossier-col">
+        <div class="hero-avatar-wrapper">
+          <div class="hero-avatar-circle">
+            <img src="assets/abhishek_avatar.jpg?v=crop2" alt="Abhishek Kumar Gupta" class="hero-avatar-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     EXECUTIVE PORTALS — RESEARCH JOURNEY & PROJECTS
+     Visual First: Designed for instantaneous comprehension & high aesthetics
+     ============================================================ -->
+<section class="section" id="overview" style="padding-top: 120px; padding-bottom: 70px; scroll-margin-top: 110px;">
+  <div class="section-container">
+    <div class="section-header" style="max-width: 800px; margin: 0 auto 36px; text-align: center;">
+      <div class="section-label">Star Topology · System Emergence</div>
+      <h2 class="section-title">The Foundation Web: How Projects Emerge into Novara</h2>
+      <p class="section-subtitle" style="font-size: 1.02rem; color: var(--text-secondary); line-height: 1.6;">
+        Every past study and circuit prototype was a deliberate node built to solve one piece of the puzzle. Together, they form the constellation that powers <strong>Novara</strong>.
+      </p>
+      <div class="section-sep" style="margin: 18px auto 0;"></div>
+    </div>
+
+    <!-- STAR TOPOLOGY CONSTELLATION MAP -->
+    <div class="star-topology-container">
+      
+      <!-- TOPOLOGY SVG CONNECTOR WEB (Drawn between satellites and center) -->
+      <svg class="topology-svg-web" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="beamGradLeftTop" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#35D39A" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#72C5E8" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="beamGradLeftBottom" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#F7D058" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#72C5E8" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="beamGradRightTop" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#72C5E8" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#35D39A" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="beamGradRightBottom" x1="100%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#F0A55E" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#35D39A" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Laser constellation paths connecting 4 nodes to center -->
+        <path d="M 280 140 C 420 160, 480 240, 520 280" class="topo-beam beam-tl" stroke="url(#beamGradLeftTop)"/>
+        <path d="M 280 460 C 420 440, 480 360, 520 320" class="topo-beam beam-bl" stroke="url(#beamGradLeftBottom)"/>
+        <path d="M 920 140 C 780 160, 720 240, 680 280" class="topo-beam beam-tr" stroke="url(#beamGradRightTop)"/>
+        <path d="M 920 460 C 780 440, 720 360, 680 320" class="topo-beam beam-br" stroke="url(#beamGradRightBottom)"/>
+      </svg>
+
+      <div class="topology-grid">
+        <!-- LEFT COLUMN: SATELLITES 1 & 2 -->
+        <div class="topology-column left-wing">
+          
+          <!-- Node 1: DREAMER Audit -->
+          <div class="topology-node-card node-green" data-node="tl">
+            <div class="node-header">
+              <span class="node-badge green">01 · Ground Truth</span>
+              <span class="node-star-dot"></span>
+            </div>
+            <h3 class="node-title">DREAMER Emotion AI Audit</h3>
+            <p class="node-desc">
+              Exposed video ID leakage where models hit 83% without biosignals. Proved wearable AI fails without ground-truth physical signal fidelity.
+            </p>
+            <div class="node-link-row">
+              <span class="node-feeds-tag">Feed to Novara: <strong>Signal Integrity</strong></span>
+              <a href="dreamer-emotion.html" class="node-anchor">Audit Case Study →</a>
+            </div>
+          </div>
+
+          <!-- Node 2: DIY ECG/PPG Hardware Rig -->
+          <div class="topology-node-card node-yellow" data-node="bl">
+            <div class="node-header">
+              <span class="node-badge yellow">02 · Analog Silicon</span>
+              <span class="node-star-dot"></span>
+            </div>
+            <h3 class="node-title">DIY Analog Bio-Sensor Rig</h3>
+            <p class="node-desc">
+              Breadboarded AD8232 &amp; MAX30102 front-ends with custom Python oscilloscope telemetry. Solved dual-trace timing and Pulse Transit Time (PTT).
+            </p>
+            <div class="node-link-row">
+              <span class="node-feeds-tag">Feed to Novara: <strong>Dual-Modality Front-End</strong></span>
+              <a href="diy-ecg.html" class="node-anchor">Hardware Rig →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CENTER COLUMN: CORE CONVERGENCE HUB (NOVARA) -->
+        <div class="topology-column center-nucleus">
+          <div class="topology-nucleus-card">
+            
+            <!-- Cosmic Pulsing Halo Rings -->
+            <div class="nucleus-halo-ring ring-1"></div>
+            <div class="nucleus-halo-ring ring-2"></div>
+            
+            <div class="nucleus-content">
+              <div class="nucleus-badge-row">
+                <span class="nucleus-badge">
+                  <span class="pulse-star-core"></span>
+                  Flagship Nucleus · Star Center
+                </span>
+              </div>
+
+              <h3 class="nucleus-title">Novara</h3>
+              <div class="nucleus-tagline">Dual ECG + Optical PPG Wearable Platform</div>
+              
+              <p class="nucleus-desc">
+                The apex where all foundational research unites: a continuous clinical-grade wearable engineered to catch hypertension and maternal preeclampsia before clinical crises.
+              </p>
+
+              <!-- Central Spec Constellation -->
+              <div class="nucleus-specs-grid">
+                <div class="nucleus-spec-item">
+                  <span class="ns-val">99.0%</span>
+                  <span class="ns-lbl">MIT-BIH Sens</span>
+                </div>
+                <div class="nucleus-spec-item">
+                  <span class="ns-val">&lt;15 ms</span>
+                  <span class="ns-lbl">Edge Latency</span>
+                </div>
+                <div class="nucleus-spec-item">
+                  <span class="ns-val">Dual</span>
+                  <span class="ns-lbl">ECG + PPG</span>
+                </div>
+                <div class="nucleus-spec-item">
+                  <span class="ns-val">4-Layer</span>
+                  <span class="ns-lbl">Rigid-Flex</span>
+                </div>
+              </div>
+
+              <div class="nucleus-actions">
+                <a href="projects.html" class="nucleus-btn primary">
+                  <span>Explore Novara Case Study</span>
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="journey.html" class="nucleus-btn secondary">
+                  <span>The 7-Phase Research Journey</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SATELLITES 3 & 4 -->
+        <div class="topology-column right-wing">
+          
+          <!-- Node 3: Cognitive Working Memory (ds006848) -->
+          <div class="topology-node-card node-blue" data-node="tr">
+            <div class="node-header">
+              <span class="node-badge blue">03 · Micro-Cardiology</span>
+              <span class="node-star-dot"></span>
+            </div>
+            <h3 class="node-title">Cognitive Working-Memory ECG</h3>
+            <p class="node-desc">
+              Analyzed 5,959 trials at 1000 Hz. Proved heart slows by -1.93 BPM during mental focus and engineered &lt;15ms Pan-Tompkins edge detection.
+            </p>
+            <div class="node-link-row">
+              <span class="node-feeds-tag">Feed to Novara: <strong>Sub-15ms Edge DSP</strong></span>
+              <a href="cardiac-working-memory.html" class="node-anchor">Cardiac Study →</a>
+            </div>
+          </div>
+
+          <!-- Node 4: Lunar Longitudinal Study -->
+          <div class="topology-node-card node-orange" data-node="br">
+            <div class="node-header">
+              <span class="node-badge orange">04 · Longitudinal Modeling</span>
+              <span class="node-star-dot"></span>
+            </div>
+            <h3 class="node-title">Lunar Physiological Baselines</h3>
+            <p class="node-desc">
+              Audited 42 multi-day continuous cycles. Modeled subtle biological shifts (d = 0.27), replacing static alarms with personal baseline tracking.
+            </p>
+            <div class="node-link-row">
+              <span class="node-feeds-tag">Feed to Novara: <strong>Adaptive Baselines</strong></span>
+              <a href="lunar.html" class="node-anchor">Lunar Study →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BOTTOM SUMMARY CONVERGENCE BAR -->
+      <div class="topology-convergence-bar">
+        <div class="tcb-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#35D39A" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-3.5-6.5l-2.1 2.1m-8.8 8.8l-2.1 2.1m0-13l2.1 2.1m8.8 8.8l2.1 2.1"/></svg>
+        </div>
+        <div class="tcb-text">
+          <strong>The Emergence Law:</strong> Data auditing enforced signal truth &rarr; Analog rig built the physical sensors &rarr; Cognitive study tuned sub-beat DSP &rarr; Lunar study unlocked personalized baselines &rarr; <strong>All converged into Novara.</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ============================================================
+     SKILLS / TECHNICAL STACK & INSTRUMENTATION LABORATORY
+     ============================================================ -->
+<section class="section" id="skills">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-label">Technical Mastery</div>
+      <h2 class="section-title">Instrumentation &amp; Engineering Stack</h2>
+      <p class="section-subtitle">Bridging physical analog bio-potential front-ends with sub-millisecond digital signal processing.</p>
+      <div class="section-sep"></div>
+    </div>
+
+    <!-- Core Capabilities 4-Grid with Proficiency Highlights -->
+    <div class="skills-grid">
+
+      <!-- Skill 1 -->
+      <div class="skill-card green">
+        <div class="skill-card-top">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CCB91" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="skill-badge">Core Mastery</span>
+        </div>
+        <h3>Biomedical Signal Processing</h3>
+        <p>Continuous-time filter design, QRS complex extraction, artifact rejection, and time/frequency HRV metrics extraction.</p>
+        
+        <div class="skill-highlights">
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Pan-Tompkins QRS peak detection (&lt;15ms latency)</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Time &amp; Frequency HRV (RMSSD, SDNN, Welch PSD)</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Wavelet denoising &amp; baseline wander removal</div>
+        </div>
+
+        <ul class="skill-list">
+          <li>Bandpass Filtering</li>
+          <li>R-peak Detection</li>
+          <li>RMSSD / SDNN</li>
+          <li>Welch PSD</li>
+          <li>NeuroKit2</li>
+          <li>PyWavelets</li>
+        </ul>
+      </div>
+
+      <!-- Skill 2 -->
+      <div class="skill-card brown">
+        <div class="skill-card-top">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E4B84A" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+          </div>
+          <span class="skill-badge">Hardware</span>
+        </div>
+        <h3>Embedded Systems &amp; PCB Layout</h3>
+        <p>Ultra-low-power firmware, high-speed SPI/I2C sensor buses, 4-layer PCB layout, and analog ground plane isolation.</p>
+
+        <div class="skill-highlights">
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> 4-layer rigid-flex PCB layout in KiCad (split RF/analog)</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> ESP32-S3 &amp; nRF52 BLE firmware (FreeRTOS)</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Analog front-end signal conditioning (AD8232, MAX30102)</div>
+        </div>
+
+        <ul class="skill-list">
+          <li>ESP32 / FreeRTOS</li>
+          <li>nRF52833 BLE</li>
+          <li>KiCad Layout</li>
+          <li>AD8232 / MAX30102</li>
+          <li>DRL Circuitry</li>
+          <li>I2C / SPI / DMA</li>
+        </ul>
+      </div>
+
+      <!-- Skill 3 -->
+      <div class="skill-card yellow">
+        <div class="skill-card-top">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8C9" stroke-width="2.2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <span class="skill-badge">Statistical ML</span>
+        </div>
+        <h3>Machine Learning &amp; Biostatistics</h3>
+        <p>Mixed-Effects modeling, feature engineering across autonomic rhythms, and robust cross-subject validation schemes.</p>
+
+        <div class="skill-highlights">
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Linear Mixed Models (LMM) across multi-subject trials</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Subject-held-out cross-validation &amp; baseline checks</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Multiplicity adjustment (Holm / FDR correction)</div>
+        </div>
+
+        <ul class="skill-list">
+          <li>Statsmodels LMM</li>
+          <li>Scikit-Learn</li>
+          <li>PyTorch</li>
+          <li>Hypothesis Testing</li>
+          <li>Outlier Auditing</li>
+          <li>Poincaré Geometry</li>
+        </ul>
+      </div>
+
+      <!-- Skill 4 -->
+      <div class="skill-card gray">
+        <div class="skill-card-top">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A0A8AB" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <span class="skill-badge">Physiology</span>
+        </div>
+        <h3>Physiological Sensing &amp; Neuroscience</h3>
+        <p>In-depth understanding of autonomic nervous system dynamics, cardiac electrophysiology, and cognitive workload states.</p>
+
+        <div class="skill-highlights">
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Dual-channel ECG electrophysiology &amp; morphology</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Optical photoplethysmography (PPG) pulse transit timing</div>
+          <div class="skill-highlight-item"><span class="highlight-bullet">✓</span> Real-world autonomic baseline drift &amp; confounder analysis</div>
+        </div>
+
+        <ul class="skill-list">
+          <li>PQRST Morphology</li>
+          <li>Sympathetic/Vagal Tone</li>
+          <li>Sternberg Paradigm</li>
+          <li>EEG Theta Synchronization</li>
+          <li>PPG Pulse Wave Analysis</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Lab Bench Hardware Tooling Strip -->
+    <div class="lab-tooling-strip">
+      <div class="strip-header">
+        <span class="strip-title">LAB BENCH &amp; HARDWARE TOOLS</span>
+        <span class="strip-sub">Hardware tools used for prototype soldering, board debug, and signal characterization</span>
+      </div>
+      <div class="tooling-tags">
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2CCB91" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6z"/></svg> Digital Storage Oscilloscope (Rigol 100MHz)</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E4B84A" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> 8-Channel Logic Analyzer (Saleae 24MHz)</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6FA8C9" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Active Soldering Station (TS101 / Hot Air)</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2CCB91" stroke-width="2.2"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg> Programmable Bench DC Power (Low Ripple)</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E4B84A" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> True-RMS Precision Multimeter</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6FA8C9" stroke-width="2.2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg> Nordic nRF BLE Protocol Sniffer</span>
+        <span class="tool-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A0A8AB" stroke-width="2.2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg> OpenNeuro &amp; PhysioNet Analysis Workstations</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VISION — RESEARCH ARCHITECTURE & ROADMAP
+     ============================================================ -->
+<section class="section" id="vision">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-label">Future Horizons</div>
+      <h2 class="section-title">Research Vision &amp; Architecture</h2>
+      <p class="section-subtitle">Bridging non-invasive physiological bio-telemetry with continuous cognitive state awareness.</p>
+      <div class="section-sep"></div>
+    </div>
+
+    <!-- Personal Engineering Direction -->
+    <div class="vision-card glass">
+      <h3 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 10px;">Why I Build Wearable Hardware &amp; Signal Systems</h3>
+      <p style="font-size: 0.98rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 16px;">
+        Most consumer wearables stop at step counts and rough daily averages. I focus on building low-latency hardware and signal processing pipelines that capture real-time physiological dynamics as they happen—from subtle cardiovascular slowing during deep concentration to early warning indicators of autonomic strain.
+      </p>
+      <div class="manifesto-author-row">
+        <img src="assets/abhishek_avatar.jpg?v=crop2" alt="Abhishek Kumar Gupta" class="manifesto-avatar">
+        <span class="manifesto-author">Abhishek Kumar Gupta · ECE, Delhi Technological University</span>
+      </div>
+    </div>
+
+    <!-- 3 Pillars of Research Architecture -->
+    <div class="vision-pillars-grid">
+
+      <!-- Pillar 1 -->
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2CCB91" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="7" r="2"/><circle cx="19" cy="7" r="2"/><path d="M7 8l3 3m4 2l3 3"/></svg>
+        </div>
+        <h3>Neural-Cardiac Coupling</h3>
+        <p class="pillar-desc">
+          Integrating high-resolution ECG autonomic indices with multi-channel frontal EEG spectral power (theta/alpha ratios) to detect cognitive fatigue and memory retention states in real time.
+        </p>
+        <div class="pillar-tag">Phase-Evoked Response</div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E4B84A" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+        </div>
+        <h3>Ultra-Low-Power Edge DSP</h3>
+        <p class="pillar-desc">
+          Porting continuous wavelet transforms (CWT) and Pan-Tompkins QRS tracking from Python workstations directly onto sub-15mW ARM Cortex-M33 / TinyML edge silicon for 24/7 autonomous monitoring.
+        </p>
+        <div class="pillar-tag">&lt;15 mW Silicon Budget</div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6FA8C9" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <h3>Closed-Loop Bio-Feedback</h3>
+        <p class="pillar-desc">
+          Transforming passive data collection into an active cognitive co-pilot: dynamically delivering haptic pacing, cognitive reset cues, and adaptive task throttling when parasympathetic exhaustion is detected.
+        </p>
+        <div class="pillar-tag">Autonomous Intervention</div>
+      </div>
+
+    </div>
+
+    <!-- Current Focus & Project Timeline -->
+    <div class="research-roadmap-box">
+      <div class="roadmap-header">
+        <h3>Current Focus &amp; Project Timeline</h3>
+        <span class="roadmap-status">Active Focus: Hardware Debug &amp; Testing</span>
+      </div>
+
+      <div class="roadmap-timeline">
+
+        <div class="roadmap-step completed">
+          <div class="step-dot"></div>
+          <div class="step-year">2024 · Hardware Prototypes</div>
+          <h4>Benchtop Rig &amp; Novara Prototype</h4>
+          <p>Built dual ECG/PPG benchtop acquisition rig; verified 99.0% R-peak accuracy against MIT-BIH; designed 4-layer KiCad wearable PCB.</p>
+        </div>
+
+        <div class="roadmap-step active">
+          <div class="step-dot"></div>
+          <div class="step-year">2025 · Signal Validation</div>
+          <h4>Dataset Auditing &amp; Cognitive Cardiology</h4>
+          <p>Audited 5,959 Sternberg memory trials (-1.93 bpm focus dip); validated real-world cycle variations; streaming live BLE data to custom dashboards.</p>
+        </div>
+
+        <div class="roadmap-step future">
+          <div class="step-dot"></div>
+          <div class="step-year">2026 · Integration &amp; Real-World Testing</div>
+          <h4>Enclosure Miniaturization &amp; Motion Robustness</h4>
+          <p>Fabricate compact wearable enclosure; test motion-rejection algorithms in daily use; integrate real-time HRV feedback.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-profile">
+      <img src="assets/abhishek_avatar.jpg?v=formal" alt="Abhishek Kumar Gupta" class="footer-avatar-img">
+      <div class="footer-profile-info">
+        <div class="footer-name">Abhishek Kumar Gupta</div>
+        <div class="footer-role">ECE · DTU · Biomedical Signal Processing &amp; Wearable Systems</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/abhisheknote1234-writ" target="_blank" class="footer-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/abhishek-gupta-380a09387/" target="_blank" class="footer-link">LinkedIn</a>
+      <a href="mailto:" class="footer-link">Email</a>
+    </div>
+    <div class="footer-copy">© 2026 Abhishek Kumar Gupta. Built with curiosity and solder fumes.</div>
+  </div>
+</footer>
+
+
+<!-- Core 3D & Animation Libraries (Local High-Performance Assets) -->
+<script src="assets/three.min.js"></script>
+<script src="assets/gsap.min.js"></script>
+<script src="assets/ScrollTrigger.min.js"></script>
+<script src="assets/lenis.min.js"></script>
+
+<!-- WebGL Background: Starry Cloudy Aura Constellation & Scrollytelling Fly-Through -->
+<script src="three-scene.js"></script>
+
+<!-- Coordinated GSAP + ScrollTrigger Scrollytelling Architecture -->
+<script src="main-animation.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovering Confounding Variables — Research Case Study</title>
+  <meta name="description" content="Technical investigation uncovering how sleep deprivation, febrile shifts, and circadian rhythms confound single-sensor ECG and HRV machine learning algorithms.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚠️</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-05" class="back-link" onclick="handleBackToJourney(event, 'phase-05')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#matrix" class="quick-anchor-btn">Confounder Matrix</a>
+        <a href="#method" class="quick-anchor-btn">Method</a>
+        <a href="#results" class="quick-anchor-btn">Results</a>
+        <a href="#failures" class="quick-anchor-btn">What Failed</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+        <a href="#limitations" class="quick-anchor-btn">Limitations</a>
+        <a href="#next" class="quick-anchor-btn">Next Step</a>
+        <a href="#proof" class="quick-anchor-btn">Proof</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">PHASE 05 / HITTING LIMITS</div>
+      <div class="study-pill-row">
+        <span class="study-pill terracotta">Contextual Confounders</span>
+        <span class="study-pill yellow">Multimodal Fusion Requirement</span>
+        <span class="study-pill green">Circadian &amp; Febrile Analysis</span>
+      </div>
+
+      <h1 class="study-title">Discovering Confounding Variables</h1>
+      <p class="study-lead">
+        When testing heart-rate algorithms outside the lab in real life, I found major hidden traps: sleeping only 4 hours dropped heart rate variability by 34%, and a mild fever increased resting heart rate by 14 beats per minute. These bodily changes trick single-sensor devices into thinking someone is panicking or stressed when they are just tired or sick. To be reliable, health trackers need multiple sensors working together.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Hidden Trap 01</div>
+          <div class="value">&minus;34% Heart Variability (Sleep Loss)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Hidden Trap 02</div>
+          <div class="value">+14 bpm Heart Rate (Mild Fever)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Algorithm Mistake</div>
+          <div class="value" style="color: var(--accent-terracotta);">False Stress Warnings</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">The Real Solution</div>
+          <div class="value" style="color: var(--accent-green-bright);">Combining Multiple Sensors</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">The Problem: Algorithms Breaking in Real Life</h2>
+      <p class="section-text">
+        In controlled lab experiments, everything is tidy: room temperature is set, people sleep well, and they stay completely still. But in real everyday life, our bodies are constantly changing. When I tested heart-monitoring algorithms outside the lab, the models made huge mistakes.
+      </p>
+      <p class="section-text">
+        If someone only slept 4 hours, their heart patterns looked identical to someone experiencing severe psychological panic. And if someone had a mild fever starting, their faster heart rate was misclassified as "high emotional excitement"—even while they were resting quietly in bed.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Core Question</span>
+      <h2 class="section-heading">What was I trying to understand?</h2>
+      <p class="section-text">
+        What everyday factors (like lack of sleep, mild sickness, or simply standing up) fool heart sensors? And can a single heart sensor ever reliably tell the difference between mental stress and physical strain without other sensors to help it?
+      </p>
+    </section>
+
+    <!-- 03 CONFOUNDER MATRIX -->
+    <section class="study-section" id="matrix">
+      <span class="section-tag">03 · Hidden Traps Comparison</span>
+      <h2 class="section-heading">Real-World Factors That Fool Heart Sensors</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Real-World Factor</th>
+              <th>What Happens to the Body</th>
+              <th>How Simple AI Gets It Wrong</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Lack of Sleep (4h vs 8h)</strong></td>
+              <td>&minus;34% Heart Rate Variability drop</td>
+              <td>Misclassified as "Severe Anxiety" or "High Stress" even while calmly reading.</td>
+            </tr>
+            <tr>
+              <td><strong>Mild Fever / Immune Response</strong></td>
+              <td>+14 bpm resting heart rate jump</td>
+              <td>Misclassified as "Anger" or "Emotional Excitement" while resting in bed.</td>
+            </tr>
+            <tr>
+              <td><strong>Standing Up vs Sitting</strong></td>
+              <td>Sudden shift in heart rhythms</td>
+              <td>Misclassified as mental work, when it was just blood pressure adjusting to standing.</td>
+            </tr>
+            <tr>
+              <td><strong>Coffee / Stimulants</strong></td>
+              <td>Faster pulse &amp; lower variability for 4–6 hrs</td>
+              <td>Misclassified as poor body recovery and stress rather than normal caffeine effects.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 METHOD -->
+    <section class="study-section" id="method">
+      <span class="section-tag">04 · How I Tested This</span>
+      <h2 class="section-heading">Testing Each Factor Step-by-Step</h2>
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 01</div>
+          <div class="method-step-title">Sleep Loss Testing</div>
+          <div class="method-step-desc">
+            Compared morning heart signals after a full 8-hour sleep against a 4-hour sleep night, keeping tasks identical.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 02</div>
+          <div class="method-step-title">Fever Tracking</div>
+          <div class="method-step-desc">
+            Recorded heart signals during a natural mild viral cold, tracking how slight temperature rises pushed the heart rate up.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 03</div>
+          <div class="method-step-title">Posture Testing</div>
+          <div class="method-step-desc">
+            Measured natural heart rhythm shifts when switching between lying down, sitting, and standing with zero mental stress.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 04</div>
+          <div class="method-step-title">Algorithm Stress Test</div>
+          <div class="method-step-desc">
+            Tested how badly standard AI models fail when these factors are ignored versus when personal context is taken into account.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 RESULTS -->
+    <section class="study-section" id="results">
+      <span class="section-tag">05 · What The Data Showed</span>
+      <h2 class="section-heading">Breaking Down the Numbers</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 24px 0;">
+        <div class="figure-card" style="margin: 0; border-left: 3px solid var(--accent-terracotta);">
+          <div class="figure-header">
+            <div class="figure-title">Hidden Trap 01 · Lack of Sleep</div>
+            <div class="figure-badge" style="background: rgba(201, 120, 99, 0.2); color: var(--accent-terracotta);">&minus;34% Variability</div>
+          </div>
+          <p class="section-text" style="font-size: 0.88rem; margin-bottom: 0;">
+            Lack of sleep prevents the heart from relaxing properly. Heart rate variability dropped from a healthy 44 ms down to 29 ms. A basic heart sensor algorithm thought the person was in extreme panic, even while they were calmly relaxing.
+          </p>
+        </div>
+
+        <div class="figure-card" style="margin: 0; border-left: 3px solid var(--accent-yellow);">
+          <div class="figure-header">
+            <div class="figure-title">Hidden Trap 02 · Mild Fever</div>
+            <div class="figure-badge" style="background: rgba(240, 199, 94, 0.2); color: var(--accent-yellow-bright);">+14 bpm Jump</div>
+          </div>
+          <p class="section-text" style="font-size: 0.88rem; margin-bottom: 0;">
+            When fighting a mild sickness, the body speeds up the heart to circulate immune cells. Just a 0.9°C temperature rise pushed resting heart rate up by 14 beats per minute. Simple AI models thought this was intense emotional arousal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 WHAT FAILED -->
+    <section class="study-section" id="failures">
+      <span class="section-tag">06 · The Reality Check</span>
+      <h2 class="section-heading">Why Single Sensors Fail in the Real World</h2>
+      <p class="section-text">
+        The big mistake many algorithms make is assuming the heart only beats faster when you're emotional or stressed. But the heart is a working muscle: its first job is pumping oxygen, regulating blood pressure, and fighting infection.
+      </p>
+      <div class="sci-alert audit">
+        <strong>The Single-Sensor Problem:</strong> Without knowing if someone is walking, running a fever, or running on 3 hours of sleep, a single heart sensor cannot tell the difference between an emotional argument, a cold starting, or walking up a flight of stairs.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">What I Learned: Combining Sensors is Mandatory</h2>
+      <p class="section-text">
+        This was the major turning point of my research. I realized that clever software alone cannot fix a missing sensor. If a device only has one sensor, it's operating half-blind.
+      </p>
+      <p class="section-text">
+        To make health AI truly reliable, the physical hardware must combine:
+      </p>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8;">
+        <li><strong>Optical pulse (PPG):</strong> To see how fast blood travels from the heart to the fingers.</li>
+        <li><strong>Precision skin temperature:</strong> To instantly catch fevers and sleep recovery.</li>
+        <li><strong>Movement sensor (IMU):</strong> To filter out walking and standing before checking for stress.</li>
+      </ul>
+    </section>
+
+    <!-- 08 LIMITATIONS -->
+    <section class="study-section" id="limitations">
+      <span class="section-tag">08 · Limitations</span>
+      <h2 class="section-heading">What to Keep in Mind</h2>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8;">
+        <li>Sleep data was tested across consecutive nights rather than an overnight hospital sleep lab.</li>
+        <li>The fever data came from a natural mild cold rather than a clinical medical trial.</li>
+      </ul>
+    </section>
+
+    <!-- 09 NEXT STEP -->
+    <section class="study-section" id="next">
+      <span class="section-tag">09 · Evolution</span>
+      <h2 class="section-heading">How This Led to Phase 06</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Transition to Phase 06: Novara — Wearable Health + AI Platform</h4>
+          <p>
+            Recognizing the necessity of multimodal fusion, I began engineering <strong>Novara</strong>: a custom 4-layer BLE wearable hardware platform combining dual ECG, PPG optical sensing, skin temperature, and motion with edge AI processing.
+          </p>
+        </div>
+        <a href="novara.html" class="next-step-btn">
+          <span>Explore Phase 06 Case Study</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 10 PROOF -->
+    <section class="study-section" id="proof">
+      <span class="section-tag">10 · Confounder Reference Specs</span>
+      <h2 class="section-heading">Summary Verification Data</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Real-World Trap</th>
+              <th>What Changed</th>
+              <th>How Hardware Solves It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sleep Deficit (4 hrs sleep)</td>
+              <td>&minus;34% Heart Rate Variability</td>
+              <td>Track sleep hours to auto-adjust morning baseline expectations</td>
+            </tr>
+            <tr>
+              <td>Fever / Illness</td>
+              <td>+14 bpm Heart Rate jump</td>
+              <td>Add skin temperature sensor to catch fevers before checking stress</td>
+            </tr>
+            <tr>
+              <td>Standing up suddenly</td>
+              <td>Sudden blood pressure shift</td>
+              <td>Add motion sensor (accelerometer) to detect standing vs resting</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Research Case Study · <a href="journey.html#phase-05" onclick="handleBackToJourney(event, 'phase-05')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a> · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

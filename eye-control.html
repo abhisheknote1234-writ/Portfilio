@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eye-Controlled Car — Assistive Robotics &amp; Eye Movement Telemetry</title>
+  <meta name="description" content="Assistive robotic car controlled hands-free using eye movements and blinks. Detects eye blinks for start/stop and left/right gaze shifts for steering.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁️</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="projects.html" class="back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Projects</span>
+      </a>
+      <a href="https://github.com/abhisheknote1234-writ/Eye_Control_Movement" target="_blank" class="back-link" style="margin-left: 12px; color: var(--accent-green-bright, #35D39A);">
+        <span>GitHub Repository</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">The Goal</a>
+        <a href="#hardware" class="quick-anchor-btn">Hardware Rig</a>
+        <a href="#signals" class="quick-anchor-btn">Eye Signals</a>
+        <a href="#gallery" class="quick-anchor-btn">Proof Gallery</a>
+        <a href="#challenges" class="quick-anchor-btn">What Was Tough</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">ASSISTIVE ROBOTICS &amp; BIOSIGNALS</div>
+      <div class="study-pill-row">
+        <span class="study-pill green">Eye Movement (EOG)</span>
+        <span class="study-pill yellow">Hands-Free Mobility</span>
+        <span class="study-pill brown">Arduino + Serial</span>
+      </div>
+
+      <h1 class="study-title">Eye-Controlled Car for Assistive Mobility</h1>
+      <p class="study-lead">
+        A hands-free robotic car steered entirely by eye movements and blinks, built for people with severe physical mobility challenges.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Control Mechanism</div>
+          <div class="value">Eye Blinks + Left/Right Eye Movement</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Robot Hardware</div>
+          <div class="value">4-Wheel Chassis + Arduino Uno + Motor Driver</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">System Latency</div>
+          <div class="value" style="color: var(--accent-green-bright);">Live Instant Serial Telemetry (COM3)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Application</div>
+          <div class="value" style="color: var(--accent-yellow-bright);">Hands-Free Mobility &amp; Wheelchairs</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · The Big Idea</span>
+      <h2 class="section-heading">Why Drive a Car with Your Eyes?</h2>
+      <p class="section-text">
+        People with severe paralysis often lose hand movement, but their eye muscles still function normally. This project translates tiny electrical signals from eye movements and blinks into real-time steering commands for a 4-wheel robot car.
+      </p>
+    </section>
+
+    <!-- 02 GOAL -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Goal</span>
+      <h2 class="section-heading">What was I trying to achieve?</h2>
+      <p class="section-text">
+        Safely steer a vehicle using only the eyes: intentional blinks toggle Start / Stop, while looking left or right steers. Emergency stops must execute immediately with zero lag.
+      </p>
+    </section>
+
+    <!-- 03 HARDWARE -->
+    <section class="study-section" id="hardware">
+      <span class="section-tag">03 · The Robot Car</span>
+      <h2 class="section-heading">Hardware Prototype</h2>
+
+      <!-- Hardware Photo Card -->
+      <div class="figure-card" style="margin: 20px 0;">
+        <div class="figure-header">
+          <div class="figure-title">Physical 4-Wheel Robot Car Prototype</div>
+          <div class="figure-badge">Arduino Uno + Motor Driver</div>
+        </div>
+        <div style="background: #0B0F13; border-radius: 6px; overflow: hidden; padding: 18px; text-align: center;">
+          <img src="assets/eog_car_prototype.png" alt="Eye Controlled Robot Car Hardware Prototype" style="max-width: 580px; width: 100%; height: auto; border-radius: 6px; display: inline-block; box-shadow: 0 16px 36px rgba(0,0,0,0.7);">
+        </div>
+        <div class="figure-caption">
+          <strong>Physical Prototype:</strong> 4-wheel drive chassis equipped with an Arduino Uno, L298N motor driver, and rechargeable battery pack powering 4 DC gear motors.
+        </div>
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Part</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Microcontroller</td>
+              <td>Arduino Uno</td>
+              <td>Decodes eye commands and controls the wheel motors.</td>
+            </tr>
+            <tr>
+              <td>Motor Driver</td>
+              <td>Dual H-Bridge (L298N)</td>
+              <td>Drives 4 DC motors (Forward, Reverse, Left, Right, Stop).</td>
+            </tr>
+            <tr>
+              <td>Power</td>
+              <td>Li-ion Battery Pack</td>
+              <td>Dedicated motor power supply preventing resets.</td>
+            </tr>
+            <tr>
+              <td>Sensors</td>
+              <td>Biopotential Electrodes</td>
+              <td>Measures tiny eye voltage shifts and streams live data over COM3.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 SIGNALS -->
+    <section class="study-section" id="signals">
+      <span class="section-tag">04 · How It Works</span>
+      <h2 class="section-heading">Turning Eye Signals into Driving Commands</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 20px 0;">
+        <!-- Blink Card -->
+        <div class="figure-card" style="margin: 0; border-left: 3px solid var(--accent-green-bright);">
+          <div class="figure-header">
+            <div class="figure-title">Blink Detection (Start / Stop)</div>
+            <div class="figure-badge" style="background: rgba(53, 211, 154, 0.2); color: var(--accent-green-bright);">Green 'X' Peaks</div>
+          </div>
+          <img src="assets/eog_blink_waveform.png" alt="Eye Blink Waveform" style="width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 10px;">
+          <p class="section-text" style="font-size: 0.88rem; margin-bottom: 0;">
+            A deliberate blink creates a sharp electrical spike (green 'X' marks). When detected, it toggles the car between <strong>Moving</strong> and <strong>Stop</strong>.
+          </p>
+        </div>
+
+        <!-- Left/Right Card -->
+        <div class="figure-card" style="margin: 0; border-left: 3px solid var(--accent-yellow);">
+          <div class="figure-header">
+            <div class="figure-title">Gaze Shift (Steering)</div>
+            <div class="figure-badge" style="background: rgba(240, 199, 94, 0.2); color: var(--accent-yellow-bright);">Orange Markers</div>
+          </div>
+          <img src="assets/eog_left_right_movement.png" alt="Eye Left Right Waveform" style="width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 10px;">
+          <p class="section-text" style="font-size: 0.88rem; margin-bottom: 0;">
+            Looking left produces a positive wave; looking right produces a negative wave (orange marks). The software reads wave direction to turn left or right.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 LIVE PROOF & DASHBOARD -->
+    <section class="study-section" id="gallery">
+      <span class="section-tag">05 · Live Proof</span>
+      <h2 class="section-heading">Live Telemetry Interface (COM3)</h2>
+
+      <!-- System Control GUI Card -->
+      <div class="figure-card" style="margin-bottom: 20px;">
+        <div class="figure-header">
+          <div class="figure-title">Live System Control Dashboard</div>
+          <div class="figure-badge">Active COM3 Stream</div>
+        </div>
+        <div style="background: #06090D; border-radius: 6px; overflow: hidden; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.08);">
+          <img src="assets/eog_system_control.png" alt="Live EOG System Control GUI" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+        </div>
+        <div class="figure-caption">
+          <strong>Real-Time Operation:</strong> Left side plots incoming filtered eye waveforms, while the right side displays the active driving status: <strong>CAR: MOVING &gt;</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 CHALLENGES SOLVED -->
+    <section class="study-section" id="challenges">
+      <span class="section-tag">06 · Key Challenges Solved</span>
+      <h2 class="section-heading">Practical Engineering Solutions</h2>
+
+      <div class="sci-alert warning">
+        <strong>1. Involuntary Blinks:</strong> Normal everyday blinks are filtered out by duration and threshold checks—only intentional, firm blinks toggle the car.
+      </div>
+
+      <div class="sci-alert warning">
+        <strong>2. Facial Muscle Noise:</strong> Filters reject high-frequency muscle noise so talking or smiling doesn't trigger false turns.
+      </div>
+
+      <div class="sci-alert warning">
+        <strong>3. Instant Braking:</strong> Stop commands bypass serial queues to stop the motors in under 10 milliseconds.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">Summary</h2>
+      <p class="section-text">
+        Proves that low-cost biosensors and an Arduino microcontroller can provide reliable, hands-free mobility to people who cannot use manual controls.
+      </p>
+    </section>
+
+    <!-- 08 REPO LINK & FOOTER -->
+    <section class="study-section">
+      <span class="section-tag">08 · Open Source Code</span>
+      <h2 class="section-heading">Source Code on GitHub</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Eye_Control_Movement Repository</h4>
+          <p>
+            Complete code repository with real-time signal filtering, blink/gaze detection scripts, and Arduino motor firmware.
+          </p>
+        </div>
+        <a href="https://github.com/abhisheknote1234-writ/Eye_Control_Movement" target="_blank" class="next-step-btn">
+          <span>View on GitHub</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Assistive Robotics &amp; Biosignals · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a> · <a href="https://github.com/abhisheknote1234-writ/Eye_Control_Movement" target="_blank" style="color: var(--accent-green-bright); text-decoration: none;">GitHub Source</a>
+  </footer>
+
+</body>
+</html>

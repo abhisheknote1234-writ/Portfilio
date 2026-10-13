@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Long-Term Self-Monitoring &amp; HRV Discovery — Research Case Study</title>
+  <meta name="description" content="Longitudinal physiological study investigating heart rate variability (HRV) patterns across discrete emotional states, cognitive exertion, and circadian baselines.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-03" class="back-link" onclick="handleBackToJourney(event, 'phase-03')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#data" class="quick-anchor-btn">Data</a>
+        <a href="#method" class="quick-anchor-btn">Method</a>
+        <a href="#results" class="quick-anchor-btn">Results</a>
+        <a href="#failures" class="quick-anchor-btn">What Failed</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+        <a href="#limitations" class="quick-anchor-btn">Limitations</a>
+        <a href="#next" class="quick-anchor-btn">Next Step</a>
+        <a href="#proof" class="quick-anchor-btn">Proof &amp; Plots</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">PHASE 03 / DEEP OBSERVATION</div>
+      <div class="study-pill-row">
+        <span class="study-pill brown">Longitudinal N=1 Self-Tracking</span>
+        <span class="study-pill yellow">Continuous ECG &amp; HRV</span>
+        <span class="study-pill green">Autonomic State Clustering</span>
+      </div>
+
+      <h1 class="study-title">Long-Term Self-Monitoring &amp; HRV Discovery</h1>
+      <p class="study-lead">
+        I wore my self-built heart monitor over several weeks during normal daily life—working, coding, exercising, and resting. I discovered why one-size-fits-all health numbers fail: your personal baseline changes by up to 25 beats per minute depending on sleep and time of day. An algorithm must learn your personal baseline to be accurate.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Testing Type</div>
+          <div class="value">Multi-Week Self-Tracking</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Metrics Tracked</div>
+          <div class="value">Heart Rate &amp; Variability (HRV)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Activities</div>
+          <div class="value">Deep Coding, Rest, Exercise</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Core Insight</div>
+          <div class="value" style="color: #72C5E8;">Baseline Shifts (~25 bpm) Shift the Scale</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">The Problem: 3-Minute Lab Tests Miss Real Life</h2>
+      <p class="section-text">
+        Most scientific studies only track people for 3 minutes in a quiet lab. But a 3-minute snapshot completely misses how your body changes from morning to night as you tire out or recover.
+      </p>
+      <p class="section-text">
+        Using my custom test rig, I recorded my own heartbeats for weeks during real daily life: deep programming blocks, reading, stressful moments, workouts, and evening rest.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Core Question</span>
+      <h2 class="section-heading">What was I trying to understand?</h2>
+      <p class="section-text">
+        Can everyday heart rate variability accurately tell the difference between mental focus, physical exhaustion, and emotions—or do natural daily changes overwhelm the signal?
+      </p>
+    </section>
+
+    <!-- 03 DATA -->
+    <section class="study-section" id="data">
+      <span class="section-tag">03 · Protocol &amp; Data Collection</span>
+      <h2 class="section-heading">Tracking Protocol Specifications</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Protocol Details</th>
+              <th>Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Acquisition Hardware</td>
+              <td>Custom AD8232 + ESP32 System</td>
+              <td>Lead-II chest configuration with wet gel electrodes</td>
+            </tr>
+            <tr>
+              <td>Duration</td>
+              <td>Multi-week continuous logging sessions</td>
+              <td>Covering mornings, intense work blocks, and evening rest</td>
+            </tr>
+            <tr>
+              <td>Subjective Annotation</td>
+              <td>Synchronized timestamped event logs</td>
+              <td>Self-recorded emotional tags, focus levels, and error occurrences</td>
+            </tr>
+            <tr>
+              <td>Reference Alignment</td>
+              <td>Cross-verified against DREAMER ECG</td>
+              <td>Benchmarked against 7 discrete emotion clusters from literature</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 METHOD -->
+    <section class="study-section" id="method">
+      <span class="section-tag">04 · Methodology</span>
+      <h2 class="section-heading">HRV Feature Extraction &amp; Analysis</h2>
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 01</div>
+          <div class="method-step-title">Artifact Filtering</div>
+          <div class="method-step-desc">
+            Applied point-process RR filter to eliminate premature ventricular contractions (PVCs) and motion spikes before calculating statistical intervals.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 02</div>
+          <div class="method-step-title">Time-Domain Indices</div>
+          <div class="method-step-desc">
+            Calculated rolling RMSSD (parasympathetic vagal tone marker) and SDNN (total autonomic power) across 3-minute sliding windows.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 03</div>
+          <div class="method-step-title">Spectral LF/HF Ratio</div>
+          <div class="method-step-desc">
+            Lomb-Scargle periodogram estimated Low Frequency (0.04–0.15 Hz) and High Frequency (0.15–0.40 Hz) bands to evaluate sympathovagal balance.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 04</div>
+          <div class="method-step-title">Cognitive Task Segmentation</div>
+          <div class="method-step-desc">
+            Segmented physiological recordings around difficult mental tasks: Sternberg holding, complex code debugging, and task switching.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 RESULTS & PROOF -->
+    <section class="study-section" id="results">
+      <span class="section-tag">05 · Empirical Results &amp; Proof</span>
+      <h2 class="section-heading">Heart Rate Zones Across Discrete Emotional States</h2>
+      <p class="section-text">
+        Cross-analyzing physiological recordings revealed distinct autonomic clusters. High-arousal states (Happy ~100 bpm, Anger &amp; Surprise ~90 bpm) demonstrated marked sympathetic elevation compared to low-arousal states (Sad ~70 bpm, Fear ~70 bpm), providing biological boundaries despite subjective label noise.
+      </p>
+
+      <!-- Figure 01: HRV RMSSD Ranges -->
+      <div class="figure-card" id="proof-hrv" style="margin-bottom: 24px;">
+        <div class="figure-header">
+          <div class="figure-title">Fig. 01 · HRV (RMSSD) Ranges and Associated States</div>
+          <div class="figure-badge">Autonomic Flexibility Spectrum</div>
+        </div>
+
+        <div style="background: #080b0d; border-radius: 4px; overflow: hidden; padding: 6px; border: 1px solid rgba(255,255,255,0.06);">
+          <img src="assets/hrv_rmssd_ranges_and_states.png" alt="HRV (RMSSD) Ranges and Associated States" style="width: 100%; height: auto; display: block; object-fit: contain;">
+        </div>
+
+        <div class="figure-caption">
+          <strong>Autonomic flexibility and physiological state mapping:</strong> Low HRV (0–25 ms) correlates with acute stress, high mental load, and sympathetic dominance; Medium HRV (25–50 ms) indexes active cognitive evaluation, analytical thinking, and balanced autonomic activity; High HRV (50+ ms) reflects adaptive resilience, memory consolidation, and parasympathetic recovery.
+        </div>
+      </div>
+
+      <!-- Figure 02: Heart Rate Distributions by Emotion -->
+      <div class="figure-card" id="proof-hr" style="margin-bottom: 28px;">
+        <div class="figure-header">
+          <div class="figure-title">Fig. 02 · Heart Rate Distributions by Emotion</div>
+          <div class="figure-badge">Multi-Week Empirical Distributions</div>
+        </div>
+
+        <div style="background: #080b0d; border-radius: 4px; overflow: hidden; padding: 6px; border: 1px solid rgba(255,255,255,0.06);">
+          <img src="assets/hr_distributions_by_emotion.png" alt="Heart Rate Distributions by Emotion Box Plot" style="width: 100%; height: auto; display: block; object-fit: contain;">
+        </div>
+
+        <div class="figure-caption">
+          <strong>Heart rate distributions (BPM) across discrete affective states:</strong> High-arousal states (Happy ~100 bpm, Angry &amp; Surprise ~90 bpm) produce pronounced sympathetic acceleration, while low-arousal states (Sad ~70 bpm, Fear ~70 bpm) display sustained parasympathetic vagal dominance with constrained variability.
+        </div>
+      </div>
+
+      <!-- Empirical Cluster Breakdown -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 24px 0;">
+        <div class="method-step-card">
+          <div class="method-step-num" style="color: var(--accent-green-bright);">CLUSTER 01</div>
+          <div class="method-step-title">Arousal Extremes</div>
+          <div class="method-step-desc">
+            Happy (~100 bpm) and Anger (~90 bpm) drive dramatic sympathetic activation and RMSSD suppression, reflecting metabolically demanding vigilance.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num" style="color: var(--accent-yellow-bright);">CLUSTER 02</div>
+          <div class="method-step-title">Low-Arousal Valence</div>
+          <div class="method-step-desc">
+            Sad (~70 bpm) and Fear states exhibit persistent parasympathetic vagal braking, marked by lower heart rates and dampened trajectory variance.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num" style="color: #72C5E8;">CLUSTER 03</div>
+          <div class="method-step-title">Baseline Sensitivity</div>
+          <div class="method-step-desc">
+            Personal resting offset varied by up to 25 bpm between morning rest and late-night exhaustion, confirming that universal fixed cutoffs fail.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 WHAT FAILED -->
+    <section class="study-section" id="failures">
+      <span class="section-tag">06 · Forensic Post-Mortem</span>
+      <h2 class="section-heading">What Failed: The Collapse of Fixed Thresholds</h2>
+      <p class="section-text">
+        The primary algorithmic failure was attempting to use static, absolute HRV thresholds (e.g., "RMSSD &lt; 20 ms = High Stress").
+      </p>
+      <div class="sci-alert warning">
+        <strong>The Baseline Shift Problem:</strong> On a well-rested morning, my resting heart rate was 62 bpm with an RMSSD of 48 ms. Following a poor night of sleep, my baseline resting heart rate was 78 bpm with an RMSSD of 22 ms <em>while completely calm</em>. A static classifier interpreted my calm state as acute emotional distress simply because the autonomic floor had drifted.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">What I Learned: Relative Deviation Over Absolute Values</h2>
+      <p class="section-text">
+        Physiological interpretation is fundamentally relative. A drop of 10 ms in RMSSD is meaningful only when compared against the individual's rolling 7-day circadian baseline. Furthermore, mental task execution consistently produced transient cardiac deceleration upon cognitive intake—pointing toward evoked cardiac dynamics during working memory.
+      </p>
+    </section>
+
+    <!-- 08 LIMITATIONS -->
+    <section class="study-section" id="limitations">
+      <span class="section-tag">08 · Limitations</span>
+      <h2 class="section-heading">What This Investigation Does NOT Prove</h2>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8;">
+        <li>N=1 single-subject tracking cannot establish population-level statistical generalizability on its own.</li>
+        <li>Confounders like caffeine consumption and unmeasured ambient temperature introduce uncontrolled autonomic variance.</li>
+        <li>Requires rigorous multi-participant psychophysiology validation in a formal laboratory experiment.</li>
+      </ul>
+    </section>
+
+    <!-- 09 NEXT STEP -->
+    <section class="study-section" id="next">
+      <span class="section-tag">09 · Evolution</span>
+      <h2 class="section-heading">How This Led to Phase 04</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Transition to Phase 04: Question-Level Cardiac Dynamics in Working Memory</h4>
+          <p>
+            To test whether the cognitive cardiac slowing observed in my personal data was a universal neurocardiac phenomenon, I turned to a peer-reviewed cognitive dataset: OpenNeuro ds006848 (30 participants, 5,959 Sternberg working-memory trials with continuous 1000 Hz ECG).
+          </p>
+        </div>
+        <a href="cardiac-working-memory.html" class="next-step-btn">
+          <span>Explore Phase 04 Case Study</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 10 PROOF -->
+    <section class="study-section">
+      <span class="section-tag">10 · Specifications Summary</span>
+      <h2 class="section-heading">Data Metrics Summary</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>State Category</th>
+              <th>Median HR (BPM)</th>
+              <th>Autonomic Modulation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>High Arousal (Happy / Excitement)</td>
+              <td>~100 bpm</td>
+              <td>Sympathetic dominance, reduced vagal braking</td>
+            </tr>
+            <tr>
+              <td>High Arousal (Anger / Surprise)</td>
+              <td>~90 bpm</td>
+              <td>Elevated heart rate, high LF/HF ratio</td>
+            </tr>
+            <tr>
+              <td>Low Arousal (Sad / Fear)</td>
+              <td>~70 bpm</td>
+              <td>Parasympathetic predominance, restrained variance</td>
+            </tr>
+            <tr>
+              <td>Cognitive Focus (Code / Study)</td>
+              <td>~74 bpm</td>
+              <td>Evoked deceleration upon task engagement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Research Case Study · <a href="journey.html#phase-03" onclick="handleBackToJourney(event, 'phase-03')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a> · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

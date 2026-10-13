@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Recognition via EEG &amp; ECG — Research Case Study</title>
+  <meta name="description" content="Technical case study investigating emotion recognition from 14-channel EEG and 2-channel ECG on the DREAMER dataset, uncovering inter-subject ground truth variance.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-01" class="back-link" onclick="handleBackToJourney(event, 'phase-01')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#data" class="quick-anchor-btn">Data</a>
+        <a href="#method" class="quick-anchor-btn">Method</a>
+        <a href="#results" class="quick-anchor-btn">Results</a>
+        <a href="#failures" class="quick-anchor-btn">What Failed</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+        <a href="#limitations" class="quick-anchor-btn">Limitations</a>
+        <a href="#next" class="quick-anchor-btn">Next Step</a>
+        <a href="#proof" class="quick-anchor-btn">Proof</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">PHASE 01 / EXPLORATION</div>
+      <div class="study-pill-row">
+        <span class="study-pill green">DREAMER Dataset</span>
+        <span class="study-pill yellow">N=23 Subjects · 14-ch EEG + 2-ch ECG</span>
+        <span class="study-pill brown">Signal Processing &amp; ML</span>
+      </div>
+
+      <h1 class="study-title">Emotion Recognition via EEG &amp; ECG</h1>
+      <p class="study-lead">
+        I tested whether AI could read emotions (happy vs sad, calm vs excited) from brain waves and heart signals. While many research papers claim high accuracy, my audit proved those models are barely better than a coin flip (~55%) when tested on new people. The AI wasn't reading real emotions—it was just memorizing which movie clip was playing.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Dataset</div>
+          <div class="value">DREAMER Public Benchmark</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">People Tested</div>
+          <div class="value">23 Participants (14M / 9F)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Sensors</div>
+          <div class="value">14 Brain Sensors + Heart ECG</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">The Big Finding</div>
+          <div class="value" style="color: var(--accent-green-bright);">AI Was Memorizing Movie Clips</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">The Big Question: Can Wearables Truly Read Your Mood?</h2>
+      <p class="section-text">
+        Many tech companies and research papers claim AI can detect how you feel using heart and brain sensors. To test whether this claim holds up in the real world, I built an AI model using a benchmark dataset (DREAMER) where participants watched emotional movie clips while wearing sensors.
+      </p>
+      <p class="section-text">
+        The Reality Check: When tested fairly on new people the model had never seen before, its accuracy collapsed to near coin-flip levels (52% to 57%). The models completely failed to transfer across different humans.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · What I Investigated</span>
+      <h2 class="section-heading">Why Does Emotion AI Struggle?</h2>
+      <p class="section-text">
+        Can physical body signals (heartbeats and brain waves) reliably decode how someone is feeling without calibrating to each person individually first?
+      </p>
+      <p class="section-text">
+        And when the AI fails, what is the real reason?
+      </p>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8; margin-bottom: 20px;">
+        <li><strong>Is the AI model not smart enough?</strong> Would a bigger machine learning model fix it?</li>
+        <li><strong>Are the sensors too noisy?</strong> Do consumer headsets drop critical brain waves?</li>
+        <li><strong>Or are human feelings just too subjective?</strong> Can you really rate complex emotions on a simple 1-to-5 number scale?</li>
+      </ul>
+    </section>
+
+    <!-- 03 DATA / HARDWARE -->
+    <section class="study-section" id="data">
+      <span class="section-tag">03 · Data &amp; Hardware</span>
+      <h2 class="section-heading">Dataset Specifications</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Specification</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dataset Source</td>
+              <td>DREAMER (Katsigiannis &amp; Ramzan, 2018)</td>
+              <td>Public benchmark affective dataset</td>
+            </tr>
+            <tr>
+              <td>Participants (N)</td>
+              <td>23 Healthy Adults (14 Males, 9 Females)</td>
+              <td>Aged 22–33 years</td>
+            </tr>
+            <tr>
+              <td>EEG Modality</td>
+              <td>14-Channel Emotiv EPOC Wireless EEG</td>
+              <td>128 Hz sampling, AF3, F7, F3, FC5, T7, P7, O1, O2, P8, T8, FC6, F4, F8, AF4</td>
+            </tr>
+            <tr>
+              <td>ECG Modality</td>
+              <td>2-Channel SHIMMER Wireless ECG</td>
+              <td>256 Hz sampling rate, Lead I &amp; Lead II placement</td>
+            </tr>
+            <tr>
+              <td>Stimuli Protocol</td>
+              <td>18 Film Clips (65–393 seconds duration)</td>
+              <td>Targeting 9 distinct emotional quadrants</td>
+            </tr>
+            <tr>
+              <td>Ground Truth Labels</td>
+              <td>Self-Assessment Manikin (SAM) Scale (1 to 5)</td>
+              <td>Valence, Arousal, and Dominance ratings</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 METHOD -->
+    <section class="study-section" id="method">
+      <span class="section-tag">04 · Methodology</span>
+      <h2 class="section-heading">Signal Acquisition &amp; Processing Pipeline</h2>
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">STEP 01</div>
+          <div class="method-step-title">Preprocessing &amp; Denoising</div>
+          <div class="method-step-desc">
+            EEG bandpassed at 4.0–45.0 Hz using 4th-order zero-phase Butterworth filter; ocular artifact rejection. ECG filtered (0.5–40 Hz) and baseline-wander removed via median subtraction.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STEP 02</div>
+          <div class="method-step-title">Feature Extraction</div>
+          <div class="method-step-desc">
+            Extracted Power Spectral Density (PSD) and Differential Entropy (DE) across Theta (4-8Hz), Alpha (8-13Hz), and Beta (14-30Hz) bands. ECG R-peak detection extracted RR intervals, RMSSD, and LF/HF power ratio.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STEP 03</div>
+          <div class="method-step-title">Classification Models</div>
+          <div class="method-step-desc">
+            Benchmarked Support Vector Machines (RBF kernel), Random Forests, and Gradient Boosted Classifiers across binary high/low valence and arousal splits.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STEP 04</div>
+          <div class="method-step-title">Validation Protocol</div>
+          <div class="method-step-desc">
+            Evaluated via both Leave-One-Trial-Out (within-subject) and Leave-One-Subject-Out (LOSO cross-subject) schemes to expose generalization degradation.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 RESULTS: EXPERIMENT A & B TEMPORAL AUDIT -->
+    <section class="study-section" id="results">
+      <span class="section-tag">05 · Empirical Results &amp; Temporal Experiments</span>
+      <h2 class="section-heading">Experimental Audit: 30s Trajectories, Snapshot Windows &amp; Confound Baselines</h2>
+      
+      <p class="section-text">
+        Both experiments completed on the <strong>14 training subjects (252 trials from 18 stimuli)</strong>. No validation or test subjects were used for feature extraction or modeling. The duration audit passed for all 252 trials, with zero alignment failures and zero feature-build errors. Stage 05 marked 253 of 414 trials for EEG review, but recommended excluding none. All available training windows were eligible for EEG, ECG, and fusion. The 500 µV review flag appeared in 438 Experiment A windows and 133 Experiment B snapshots; it did not exclude them.
+      </p>
+
+      <!-- EXPERIMENT A -->
+      <div style="margin: 32px 0 24px;">
+        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #FFFFFF; margin-bottom: 8px;">
+          Experiment A: 30-Second Trajectory Windows
+        </h3>
+        <p class="section-text">
+          Later windows have fewer trials as clips end: sample support drops from 252 trials at 0–30 seconds down to 14 trials at 360–390 seconds. No Valence model produced out-of-fold predictions for that final window, and Dominance balanced accuracy was undefined there because observed labels contained only one class.
+        </p>
+        <p class="section-text" style="color: var(--accent-yellow-bright); font-size: 0.86rem;">
+          Across defined window positions, median balanced accuracy ranged from <strong>0.426 to 0.576</strong> across target, modality, and model combinations. These are descriptive medians across windows, not pooled performance estimates.
+        </p>
+
+        <div class="data-table-wrapper" style="margin-top: 14px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Target</th>
+                <th>Modality</th>
+                <th>Logistic Regression median [range]</th>
+                <th>Random Forest median [range]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Valence</strong></td>
+                <td>EEG</td>
+                <td>0.571 [0.354–0.694]</td>
+                <td>0.561 [0.490–0.644]</td>
+              </tr>
+              <tr>
+                <td><strong>Valence</strong></td>
+                <td>ECG</td>
+                <td>0.460 [0.406–0.554]</td>
+                <td>0.505 [0.452–0.588]</td>
+              </tr>
+              <tr>
+                <td><strong>Valence</strong></td>
+                <td>EEG + ECG (Fusion)</td>
+                <td>0.570 [0.315–0.657]</td>
+                <td>0.576 [0.488–0.612]</td>
+              </tr>
+              <tr>
+                <td><strong>Arousal</strong></td>
+                <td>EEG</td>
+                <td>0.500 [0.319–0.615]</td>
+                <td>0.506 [0.459–0.582]</td>
+              </tr>
+              <tr>
+                <td><strong>Arousal</strong></td>
+                <td>ECG</td>
+                <td>0.426 [0.268–0.675]</td>
+                <td>0.483 [0.371–0.591]</td>
+              </tr>
+              <tr>
+                <td><strong>Arousal</strong></td>
+                <td>EEG + ECG (Fusion)</td>
+                <td>0.521 [0.319–0.602]</td>
+                <td>0.506 [0.446–0.619]</td>
+              </tr>
+              <tr>
+                <td><strong>Dominance</strong></td>
+                <td>EEG</td>
+                <td>0.536 [0.379–0.658]</td>
+                <td>0.518 [0.425–0.569]</td>
+              </tr>
+              <tr>
+                <td><strong>Dominance</strong></td>
+                <td>ECG</td>
+                <td>0.485 [0.406–0.712]</td>
+                <td>0.499 [0.393–0.674]</td>
+              </tr>
+              <tr>
+                <td><strong>Dominance</strong></td>
+                <td>EEG + ECG (Fusion)</td>
+                <td>0.526 [0.378–0.681]</td>
+                <td>0.510 [0.455–0.584]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EXPERIMENT B -->
+      <div style="margin: 36px 0 24px;">
+        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #FFFFFF; margin-bottom: 8px;">
+          Experiment B: Equal-Duration Snapshots (Early, Middle, Late)
+        </h3>
+        <p class="section-text">
+          All three temporal regions (Early, Middle, Late) had 14 subjects, 252 trials, and 18 stimuli. Illustrative exploratory point estimates were:
+        </p>
+        <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8; margin-bottom: 18px;">
+          <li><strong>Valence (Middle / EEG / LogReg):</strong> 0.600 (95% participant-bootstrap CI: 0.553–0.644)</li>
+          <li><strong>Arousal (Early / EEG+ECG / Random Forest):</strong> 0.566 (95% CI: 0.517–0.612)</li>
+          <li><strong>Dominance (Middle / EEG / Random Forest):</strong> 0.613 (95% CI: 0.554–0.675)</li>
+        </ul>
+
+        <!-- Dominance Figure (User Asset) -->
+        <div class="figure-card" style="margin: 20px 0;">
+          <div class="figure-header">
+            <div class="figure-title">Fig. 01 · Dominance · Random Forest Snapshots (Early, Middle, Late)</div>
+            <div class="figure-badge">N=14 Subjects · 252 Trials</div>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 4px; padding: 12px; text-align: center;">
+            <img src="assets/dreamer_experiment_b_dominance.png" alt="Dominance · Random Forest snapshots across Early, Middle, Late regions" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 2px;">
+          </div>
+          <div class="figure-caption">
+            <strong>Balanced accuracy (95% CI) across Early, Middle, and Late stimulus snapshots for EEG, ECG, and EEG+ECG.</strong> Integrity check confirms 0 of 1,242 Holm-adjusted contrasts reached significance, while the non-physiological clip-only baseline reached 0.83 (Valence), 0.72 (Arousal), and 0.75 (Dominance).
+          </div>
+        </div>
+
+        <div class="sci-alert warning">
+          <strong>Statistical Correction Audit:</strong> No paired temporal comparison survived Holm multiplicity correction: <strong>0 of 1,242 comparisons with finite adjusted p-values</strong>. For example, while the early-minus-middle Dominance difference for EEG Random Forest was &minus;0.122 with a raw p = 0.004, its Holm-adjusted p-value rose to <strong>p = 0.191</strong>. The empirical results do not establish that any temporal region performs better than chance.
+        </div>
+      </div>
+
+      <!-- CONFOUND BASELINES -->
+      <div style="margin: 36px 0 24px;">
+        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #FFFFFF; margin-bottom: 8px;">
+          Confound Baselines: The Decisive Alternative Explanation
+        </h3>
+        <p class="section-text">
+          Evaluating non-physiological confound baselines revealed the underlying mechanism of apparent classifier predictive capacity:
+        </p>
+
+        <div class="data-table-wrapper" style="margin-top: 12px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Baseline Model</th>
+                <th>Valence BA [95% CI]</th>
+                <th>Arousal BA [95% CI]</th>
+                <th>Dominance BA [95% CI]</th>
+                <th>Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color: var(--accent-green-bright); font-weight: 600;">Clip-Only Baseline</td>
+                <td><strong>0.828</strong> [0.783–0.878]</td>
+                <td><strong>0.718</strong> [0.670–0.768]</td>
+                <td><strong>0.755</strong> [0.702–0.814]</td>
+                <td>Massively exceeds physiological models</td>
+              </tr>
+              <tr>
+                <td>Duration-Only Baseline</td>
+                <td>0.491</td>
+                <td>0.534</td>
+                <td>0.617 [0.577–0.654]</td>
+                <td>Near chance for Valence/Arousal; modest Dominance bias</td>
+              </tr>
+              <tr>
+                <td>Global Majority Baseline</td>
+                <td>0.500</td>
+                <td>0.500</td>
+                <td>0.500</td>
+                <td>Theoretical chance floor</td>
+              </tr>
+              <tr>
+                <td>Subject-Majority Oracle</td>
+                <td>~0.59–0.60</td>
+                <td>~0.59–0.60</td>
+                <td>~0.59–0.60</td>
+                <td>Descriptive only; not a new-participant predictor</td>
+              </tr>
+              <tr>
+                <td style="color: #94A3B8;">Best Multimodal Physiology</td>
+                <td>0.576 [0.488–0.612]</td>
+                <td>0.521 [0.319–0.602]</td>
+                <td>0.526 [0.378–0.681]</td>
+                <td>Falls far short of stimulus clip predictor</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="section-text" style="margin-top: 14px;">
+          <strong>Why this matters:</strong> A simple model that only guessed based on which movie clip was playing (without looking at heartbeats at all) scored 83% accuracy! This proved that past papers claiming high AI accuracy were just memorizing the movie clips, not actually reading human biology.
+        </p>
+      </div>
+    </section>
+
+    <!-- 06 WHAT FAILED -->
+    <section class="study-section" id="failures">
+      <span class="section-tag">06 · The Reality Check</span>
+      <h2 class="section-heading">Why Emotion AI Broke Down</h2>
+      <p class="section-text">
+        When testing the AI on new people who hadn't been in the training data, its accuracy collapsed. Two people can watch the exact same horror clip: one person feels thrilled, while another person feels bored. Because two people feel completely different things watching the same clip, the AI has no way to learn a single "correct" answer.
+      </p>
+      <div class="sci-alert warning">
+        <strong>The Trap in Previous Research:</strong> When researchers test AI on the same people who watched the clips before, the AI just memorizes the video itself. But the second you test a new person, the illusion breaks down.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">What I Learned: You Can't Grade Feelings with a Number Scale</h2>
+      <p class="section-text">
+        <em>"I started out trying to build a better emotion AI. I ended up discovering that the AI was just memorizing movie clips, not reading real human feelings."</em>
+      </p>
+      <p class="section-text">
+        In health AI, the hardest problem isn't writing fancy machine learning code. The hardest problem is that human feelings are subjective. Asking strangers to score their emotions on a 1-to-5 number scale produces messy, inconsistent data that AI cannot reliably learn.
+      </p>
+    </section>
+
+    <!-- 08 LIMITATIONS -->
+    <section class="study-section" id="limitations">
+      <span class="section-tag">08 · Limitations</span>
+      <h2 class="section-heading">Scope of Validity &amp; Formal Caveats</h2>
+      <ul style="color: #94a3b8; margin-left: 20px; line-height: 1.8;">
+        <li><strong>Training Partition Scope:</strong> These exploratory subject-held-out results concern new participants viewing the same known DREAMER clips. The temporal feature tables and model fits used only training subjects; the already-inspected test partition was not evaluated.</li>
+        <li><strong>No Temporal Superiority:</strong> They show no multiplicity-adjusted evidence that predictive performance varies by temporal region (0 of 1,242 comparisons survived Holm correction).</li>
+        <li><strong>Unseen Stimuli Caveat:</strong> They do not support a claim about unseen clips or objective emotion detection in open-world environments.</li>
+        <li>Stage 05’s quality control pass was descriptive over all 414 trials.</li>
+      </ul>
+    </section>
+
+    <!-- 09 NEXT STEP -->
+    <section class="study-section" id="next">
+      <span class="section-tag">09 · Evolution</span>
+      <h2 class="section-heading">How This Led to Phase 02</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Transition to Phase 02: DIY ECG Monitoring System</h4>
+          <p>
+            If the core flaw was relying on noisy labels and stimulus artifacts from anonymous dataset subjects, the solution was clear: become both the subject and the observer. I decided to build my own analog ECG acquisition system from scratch to study my own physiology under continuous, known protocols.
+          </p>
+        </div>
+        <a href="diy-ecg.html" class="next-step-btn">
+          <span>Explore Phase 02 Case Study</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 10 PROOF -->
+    <section class="study-section" id="proof">
+      <span class="section-tag">10 · Verification &amp; Research Artifact Files</span>
+      <h2 class="section-heading">Output Tables &amp; Audit Logs</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Artifact Description</th>
+              <th>Local File Reference</th>
+              <th>Audit Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Experiment A Results</strong></td>
+              <td><code>outputs/temporal/experiment_a_results_table.csv</code></td>
+              <td>Full 30s trajectory results by window position, modality, target, and model</td>
+            </tr>
+            <tr>
+              <td><strong>Experiment B Results</strong></td>
+              <td><code>outputs/temporal/experiment_b_results_table.csv</code></td>
+              <td>Early, Middle, Late snapshot results across 14 training subjects and 252 trials</td>
+            </tr>
+            <tr>
+              <td><strong>All Metrics &amp; Baselines</strong></td>
+              <td><code>outputs/temporal/temporal_performance.csv</code></td>
+              <td>Clip-only (0.828), duration-only, global-majority, and subject-majority performance</td>
+            </tr>
+            <tr>
+              <td><strong>Multiplicity Corrections</strong></td>
+              <td><code>outputs/temporal/paired_temporal_comparisons.csv</code></td>
+              <td>1,242 paired comparisons with raw and Holm-adjusted p-values (0 survived)</td>
+            </tr>
+            <tr>
+              <td><strong>Duration-Feature Audit</strong></td>
+              <td><code>outputs/temporal/duration_feature_audit.csv</code></td>
+              <td>Trial-level and stimulus-level correlation logs</td>
+            </tr>
+            <tr>
+              <td><strong>Window Eligibility</strong></td>
+              <td><code>outputs/temporal/window_eligibility_by_position.csv</code></td>
+              <td>Sample support decay logs (252 trials at 0–30s → 14 at 360–390s)</td>
+            </tr>
+            <tr>
+              <td><strong>Out-of-Fold Predictions</strong></td>
+              <td><code>outputs/temporal/temporal_oof_predictions.csv</code></td>
+              <td>Subject-held-out cross-validated predictions table</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Research Case Study · <a href="journey.html#phase-01" onclick="handleBackToJourney(event, 'phase-01')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a> · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>

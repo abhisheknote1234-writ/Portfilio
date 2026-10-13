@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIY ECG Monitoring System — Research Case Study</title>
+  <meta name="description" content="Technical investigation into designing and validating a custom discrete analog ECG acquisition system with AD8232, ESP32, and ADS1115 for real-time HRV telemetry.">
+
+  <!-- Google Fonts: Unified Typography System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Shared Theme -->
+  <link rel="stylesheet" href="style.css?v=case_study_v2">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="study-nav-top">
+    <div class="study-nav-inner">
+      <a href="journey.html#phase-02" class="back-link" onclick="handleBackToJourney(event, 'phase-02')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Research Journey</span>
+      </a>
+      <a href="projects.html" class="back-link" style="margin-left: 12px; color: var(--accent-blue, #72C5E8);">
+        <span>Projects</span>
+      </a>
+
+      <div class="quick-anchors">
+        <a href="#overview" class="quick-anchor-btn">Overview</a>
+        <a href="#question" class="quick-anchor-btn">Question</a>
+        <a href="#hardware" class="quick-anchor-btn">Hardware</a>
+        <a href="#method" class="quick-anchor-btn">Method</a>
+        <a href="#results" class="quick-anchor-btn">Results</a>
+        <a href="#failures" class="quick-anchor-btn">What Failed</a>
+        <a href="#lessons" class="quick-anchor-btn">What I Learned</a>
+        <a href="#next" class="quick-anchor-btn">Next Step</a>
+        <a href="#proof" class="quick-anchor-btn">Proof &amp; Video</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="study-container">
+
+    <!-- Header Section -->
+    <header class="study-hero" id="overview">
+      <div class="study-phase-label">PHASE 02 / COUNTER SOLUTION</div>
+      <div class="study-pill-row">
+        <span class="study-pill yellow">Custom Hardware Prototype</span>
+        <span class="study-pill green">AD8232 + MAX30102 + ESP32</span>
+        <span class="study-pill brown">Real-Time DSP · Dual-Trace GUI</span>
+      </div>
+
+      <h1 class="study-title">DIY ECG &amp; PPG Monitoring System</h1>
+      <p class="study-lead">
+        Instead of trusting noisy datasets downloaded from strangers on the internet, I built my own physical test rig to capture real electrical heart signals and optical finger pulses. This gave me complete control over what my body was doing while testing.
+      </p>
+
+      <div class="study-meta-grid">
+        <div class="study-meta-item">
+          <div class="label">Heart Sensor</div>
+          <div class="value">AD8232 (Electrical Heart Beat)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Optical Pulse</div>
+          <div class="value">MAX30102 (Fingertip Pulse)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Processor</div>
+          <div class="value">ESP32 (Dual-Core 240MHz)</div>
+        </div>
+        <div class="study-meta-item">
+          <div class="label">Core Takeaway</div>
+          <div class="value" style="color: var(--accent-yellow-bright);">Clean Hardware Beats Complex Code</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 01 OVERVIEW -->
+    <section class="study-section">
+      <span class="section-tag">01 · Overview</span>
+      <h2 class="section-heading">The Problem: Noisy Datasets and Missing Context</h2>
+      <p class="section-text">
+        Public research datasets are often messy: people describe their emotions inconsistently, and you have no idea if someone sneezed, shifted in their chair, or got distracted during the recording. To truly understand how heart signals respond to mental focus, I needed to build my own hardware where I knew 100% what the person was doing.
+      </p>
+      <p class="section-text">
+        This meant stepping outside of pure software and building a physical device: connecting heart sensor boards, filtering out electrical noise, and writing fast code that detects heartbeats on a microcontroller in real time.
+      </p>
+    </section>
+
+    <!-- 02 QUESTION -->
+    <section class="study-section" id="question">
+      <span class="section-tag">02 · The Engineering Goal</span>
+      <h2 class="section-heading">What was I trying to achieve?</h2>
+      <p class="section-text">
+        Can affordable electronic chips (an ESP32 and low-cost sensor modules) capture clean heart signals with millisecond accuracy, so we can calculate reliable heart rate variability live on screen?
+      </p>
+      <div class="sci-alert">
+        <strong>The Accuracy Challenge:</strong> Calculating accurate heart rate variability requires measuring the gap between heartbeats down to &plusmn;2 milliseconds. A single missed beat or glitch ruins the entire measurement.
+      </div>
+    </section>
+
+    <!-- 03 HARDWARE -->
+    <section class="study-section" id="hardware">
+      <span class="section-tag">03 · Hardware Setup</span>
+      <h2 class="section-heading">Circuit Components &amp; What They Do</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Part</th>
+              <th>Component</th>
+              <th>What It Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Heart Sensor Chip</td>
+              <td>AD8232 Amplifier</td>
+              <td>Amplifies the tiny electrical signals from the heart and filters out background static.</td>
+            </tr>
+            <tr>
+              <td>Electrical Filters</td>
+              <td>Resistor-Capacitor Filter</td>
+              <td>Blocks 50Hz electrical hum from wall outlets while letting clean heartbeats pass through.</td>
+            </tr>
+            <tr>
+              <td>High-Precision Converter</td>
+              <td>ADS1115 (16-bit ADC)</td>
+              <td>Converts delicate analog heart signals into crisp 16-bit digital numbers 860 times a second.</td>
+            </tr>
+            <tr>
+              <td>Microcontroller</td>
+              <td>ESP32 Dual-Core</td>
+              <td>The device's brain: one core reads the sensors, the other core calculates heartbeats in real time.</td>
+            </tr>
+            <tr>
+              <td>Electrodes</td>
+              <td>Medical Sticky Gel Pads</td>
+              <td>Placed on the chest to catch clean electrical pulses straight from the heart.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 METHOD -->
+    <section class="study-section" id="method">
+      <span class="section-tag">04 · How the Code Works</span>
+      <h2 class="section-heading">Step-by-Step Signal Processing</h2>
+      <div class="method-step-grid">
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 01</div>
+          <div class="method-step-title">High-Speed Sampling</div>
+          <div class="method-step-desc">
+            Reads the electrical heart voltage 860 times a second and stores it smoothly without dropping a single packet.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 02</div>
+          <div class="method-step-title">Instant Beat Detection</div>
+          <div class="method-step-desc">
+            Runs a lightweight algorithm that catches the sharp upward spike of each heartbeat in real time.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 03</div>
+          <div class="method-step-title">Heart Variability Math</div>
+          <div class="method-step-desc">
+            Measures the exact millisecond gap between consecutive beats (RR interval) to track physical relaxation vs stress.
+          </div>
+        </div>
+
+        <div class="method-step-card">
+          <div class="method-step-num">STAGE 04</div>
+          <div class="method-step-title">Live PC Dashboard</div>
+          <div class="method-step-desc">
+            Streams live heart waves over USB to a computer screen at 30 frames a second so you can watch your heart beat live.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 RESULTS & PROOF -->
+    <section class="study-section" id="results">
+      <span class="section-tag">05 · Empirical Results &amp; Proof</span>
+      <h2 class="section-heading">Live Signal Telemetry Verification</h2>
+      <p class="section-text">
+        The prototype successfully achieved continuous real-time ECG telemetry. In benchmark testing during calm cognitive focus, the system demonstrated reliable R-peak tracking: 95 BPM instantaneous heart rate, 634 ms RR interval, and 25.7 ms RMSSD HRV ("Orienting / Deciding" state).
+      </p>
+
+      <!-- Fig 01: Live Dual-Trace Oscilloscope Testing -->
+      <div class="figure-card" id="proof-dual-trace" style="margin-bottom: 24px;">
+        <div class="figure-header">
+          <div class="figure-title">Fig. 01 · Live Synchronous Dual-Trace Telemetry (ECG + Optical PPG)</div>
+          <div class="figure-badge">AD8232 + MAX30102 Live Link</div>
+        </div>
+
+        <div style="background: #000; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+          <img src="assets/diy_ecg_ppg_live_dual_trace.jpg" alt="Live Dual-Trace Oscilloscope Testing: ECG and PPG with Finger Probe" style="width: 100%; height: auto; max-height: 520px; display: block; object-fit: contain; margin: 0 auto;">
+        </div>
+
+        <div class="figure-caption">
+          <strong>Live benchtop test in action:</strong> Finger resting on the illuminated optical aperture of the MAX30102 PPG breakout (red glow) while wet-gel electrodes stream Lead-I biopotentials. The laptop screen plots dual synchronized real-time traces: <strong>Channel 1 (top green)</strong> displays the filtered electrical ECG trace with sharp QRS complexes; <strong>Channel 2 (bottom orange)</strong> captures the synchronous vascular blood volume pulse wave (PPG), enabling pulse transit time (PTT) and arterial wave contour analysis.
+        </div>
+      </div>
+
+      <!-- Fig 02: Hardware Rig Breadboard Prototype -->
+      <div class="figure-card" id="proof-hardware-rig" style="margin-bottom: 24px;">
+        <div class="figure-header">
+          <div class="figure-title">Fig. 02 · Benchtop Dual-Modality Breadboard Prototype Circuit</div>
+          <div class="figure-badge">ESP32 Hardware Rig</div>
+        </div>
+
+        <div style="background: #080B0D; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+          <img src="assets/diy_ecg_ppg_breadboard_rig.jpg" alt="Hardware Rig: ESP32, AD8232 ECG board, MAX30102 PPG sensor, and electrode leads" style="width: 100%; height: auto; max-height: 520px; display: block; object-fit: contain; margin: 0 auto;">
+        </div>
+
+        <div class="figure-caption">
+          <strong>Physical hardware architecture:</strong> Solderless prototyping assembly showing the ESP32 microcontroller (dual-core 240 MHz), the AD8232 analog front-end (red PCB) with 3.5mm jack for 3-lead snap electrodes (green, yellow, white gel pads), MAX30102 I2C optical pulse sensor (blue PCB), power rail bypass capacitors, and USB-UART streaming bridge.
+        </div>
+      </div>
+
+      <!-- Video Proof Container -->
+      <div class="figure-card" id="proof" style="margin-bottom: 24px;">
+        <div class="figure-header">
+          <div class="figure-title">Live Hardware Video Proof · Real-Time Python GUI Oscilloscope</div>
+          <div class="figure-badge">30 FPS PyQtGraph Dashboard</div>
+        </div>
+
+        <div style="position: relative; border-radius: 6px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.1);">
+          <video controls playsinline preload="metadata" poster="assets/diy_ecg_live_monitor.png" style="width: 100%; height: auto; display: block;">
+            <source src="assets/diy_ecg_live_demo.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="figure-caption">
+          <strong>Hardware &amp; Software Proof:</strong> Screen capture of live analog ECG waveform streamed over serial from the AD8232 + ESP32 setup into the custom PyQtGraph dashboard. Displays real-time R-peak markers (red indicators), instantaneous heart rate (95 BPM), beat interval (634 ms), and real-time RMSSD (25.7 ms).
+        </div>
+      </div>
+
+      <!-- Additional Signal Plots -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/diy_ecg_live_monitor.png" alt="ECG Live Monitor Screenshot" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Telemetry Dashboard:</strong> Oscilloscope visualization with real-time waveform trace and autonomic state readouts.
+          </div>
+        </div>
+
+        <div class="figure-card" style="margin: 0;">
+          <img src="assets/diy_ecg_signal.png" alt="ECG Signal Plot" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <div class="figure-caption" style="margin-top: 10px; padding-top: 10px;">
+            <strong>Pan-Tompkins DSP Output:</strong> Filtered voltage trace demonstrating sharp R-peak amplification and baseline suppression.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 WHAT FAILED -->
+    <section class="study-section" id="failures">
+      <span class="section-tag">06 · Real-World Problems</span>
+      <h2 class="section-heading">Hardware Traps I Had to Solve</h2>
+      <p class="section-text">
+        Building physical circuits revealed tricky problems you never see when analyzing clean CSV files:
+      </p>
+      <div class="sci-alert warning">
+        <strong>1. Wall Outlet Hum (50 Hz Noise):</strong> When the laptop was plugged into a wall charger, electrical buzzing from the outlet flooded the heart signal with massive waves. Powering the system on battery completely eliminated this noise.
+      </div>
+      <div class="sci-alert warning">
+        <strong>2. Motion Glitches:</strong> Whenever I moved my arm, the sticky pads tugged on the skin, creating temporary signal jumps that fooled basic peak counters. Keeping still during tests and using firm gel pads kept the trace steady.
+      </div>
+    </section>
+
+    <!-- 07 WHAT I LEARNED -->
+    <section class="study-section" id="lessons">
+      <span class="section-tag">07 · Key Takeaway</span>
+      <h2 class="section-heading">What I Learned: Clean Hardware Beats Fancy AI</h2>
+      <p class="section-text">
+        Your algorithm is only as good as your raw sensor data. If your physical circuit is clean, detecting heartbeats is simple and over 98% accurate. But if your sensor is noisy, even the most complex AI neural networks will get confused and hallucinate false beats.
+      </p>
+    </section>
+
+    <!-- 08 NEXT STEP -->
+    <section class="study-section" id="next">
+      <span class="section-tag">08 · Evolution</span>
+      <h2 class="section-heading">How This Led to Phase 03</h2>
+      <div class="next-step-box">
+        <div class="next-step-content">
+          <h4>Transition to Phase 03: Long-Term Self-Monitoring &amp; HRV Discovery</h4>
+          <p>
+            With a reliable, self-built acquisition rig in place, I was able to record my own physiology across weeks. This unlocked the ability to observe how heart rate variability shifts across real-life emotional extremes, illness, and cognitive work.
+          </p>
+        </div>
+        <a href="hrv-self-monitoring.html" class="next-step-btn">
+          <span>Explore Phase 03 Case Study</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 09 PROOF -->
+    <section class="study-section" id="proof">
+      <span class="section-tag">09 · Specifications Summary</span>
+      <h2 class="section-heading">Technical Verification Specs</h2>
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+              <th>Validation Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>R-Peak Timing Jitter</td>
+              <td>&lt; 2.4 ms</td>
+              <td>Benchmarked against synthetic ECG generator</td>
+            </tr>
+            <tr>
+              <td>ADC Effective Resolution</td>
+              <td>15.2 Bits</td>
+              <td>ADS1115 oversampled differential mode</td>
+            </tr>
+            <tr>
+              <td>GUI Refresh Rate</td>
+              <td>30 FPS</td>
+              <td>PyQtGraph hardware-accelerated OpenGL viewport</td>
+            </tr>
+            <tr>
+              <td>Serial Baud Rate</td>
+              <td>115,200 bps</td>
+              <td>Binary float protocol over USB-UART</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 0.8rem;">
+    Abhishek Kumar Gupta · Research Case Study · <a href="journey.html#phase-02" onclick="handleBackToJourney(event, 'phase-02')" style="color: var(--accent-green-bright); text-decoration: none;">Return to Research Journey</a> · <a href="projects.html" style="color: var(--accent-blue, #72C5E8); text-decoration: none;">View All Projects</a>
+  </footer>
+
+  <script>
+    function handleBackToJourney(event, fallbackPhase) {
+      if (document.referrer && document.referrer.includes('journey.html')) {
+        event.preventDefault();
+        window.history.back();
+      } else {
+        window.location.href = 'journey.html#' + fallbackPhase;
+      }
+    }
+  </script>
+</body>
+</html>
